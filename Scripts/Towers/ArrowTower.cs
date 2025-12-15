@@ -1,14 +1,17 @@
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class ArrowTower : Tower
 {
     // 1. УНИКАЛЬНЫЕ поля для арбалета
+    [Header("Уникальные поля для арбалета")]
     [SerializeField] private GameObject _arrowPrefab;
     [SerializeField] private Transform _firePoint;
     [SerializeField] private float _arrowSpeed = 15f;
     [SerializeField] private float _pierceChance = 0.2f; // 20% шанс пробить
+    [SerializeField] private float _damage = 150f;
+
     
     // 2. Переопределяем Start для настройки
     protected override void Start()
@@ -16,10 +19,9 @@ public class ArrowTower : Tower
         base.Start(); // Важно: вызываем родительский!
         
         // Настройки арбалета
-        _range = 4f; // Дальняя дистанция
-        _attackSpeed = 0.8f; // 0.8 атак в секунду
-        _cost = 120;
-        _damage = 15f * _level; // Высокий урон
+        _range = _range*1; // Дальняя дистанцияz
+
+        _damage = _damage * _level; // Высокий урон
         
         Debug.Log("Арбалетная башня построена!");
     }

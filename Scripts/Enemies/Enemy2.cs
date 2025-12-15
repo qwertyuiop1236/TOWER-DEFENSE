@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy2 : MonoBehaviour
+public class Enemy2 : Enemy
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] protected float speedMuve;    
+    [SerializeField] protected int damage;
+    
+    protected override void Start()
     {
-        
+        _speedMuve =speedMuve;
+        _damage= damage;
+        base.Start();
+    }
+    protected override void Update()
+    {
+        base.Update();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
