@@ -8,19 +8,34 @@ public abstract class Enemy : MonoBehaviour
     [Header("Общие параметры для всех врагов")]
     [SerializeField] protected float _speedMuve =1f;
     [SerializeField] protected int _cost =100;
-    [SerializeField ]protected float _xp=100;
-
-
+    [SerializeField] protected float _xp=100;
     [SerializeField] protected Canvas canvasText;
 
     protected int _damage;
-
     private Transform[] waypoints; // Массив точек пути
     private int currentIndex = 0;  // Текущая точка
 
-    public float Cost => _cost;
+    public int Cost => _cost;
     public float XP =>_xp;
-
+    public virtual void TakeDamage(float Damage)
+    {
+        if (_xp - Damage > 0)
+        {
+            _xp -= Damage;
+        }
+        else
+        {
+            Death();
+        }
+    }
+    protected virtual void Death()
+    {
+        SistemUITest._koin+=Cost;
+        SistemUITest._Point+=Cost;
+        Debug.Log("Полученно денег" + Cost);
+        Debug.Log("Полученно Point" + Cost);
+        Destroy(gameObject);
+    }
     protected virtual void Attack(int Damage)
     {
         // TODO: Нанести урон игроку
@@ -42,7 +57,6 @@ public abstract class Enemy : MonoBehaviour
             Debug.LogError("Нет точек пути! Добавьте Waypoints в PathManager.");
         }
     }
-    
     protected virtual void Update()
     {
         // Если точек нет или дошли до конца - выходим

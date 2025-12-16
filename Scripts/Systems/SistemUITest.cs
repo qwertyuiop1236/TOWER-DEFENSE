@@ -5,8 +5,8 @@ using TMPro;
 public class SistemUITest : MonoBehaviour
 {
     [SerializeField] public static int _xpPoint=20;
-    [SerializeField] private int _koin=100;
-    [SerializeField] private int _Point=0;
+    [SerializeField] public static int _koin=100;
+    [SerializeField] public static int _Point=0;
     [SerializeField] private float _time=180;
 
 

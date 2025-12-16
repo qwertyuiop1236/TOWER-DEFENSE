@@ -36,11 +36,7 @@ public abstract class Tower : MonoBehaviour
         if (!_canAttack) return;
         
         // Обновляем таймер
-        if (_attackTimer > 0f)
-        {
             _attackTimer -= Time.deltaTime;
-        }
-
 
         // Ищем цель если нет текущей
         if (_currentTarget == null || !IsTargetValid(_currentTarget))

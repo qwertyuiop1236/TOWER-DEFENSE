@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ArrowTower : Tower
@@ -10,7 +11,8 @@ public class ArrowTower : Tower
     [SerializeField] private Transform _firePoint;
     [SerializeField] private float _arrowSpeed = 15f;
     [SerializeField] private float _pierceChance = 0.2f; // 20% шанс пробить
-    [SerializeField] private float _damage = 150f;
+    [SerializeField] private float _damage1 = 150f;
+    [SerializeField] private float _rangeScel=2f;
 
     
     // 2. Переопределяем Start для настройки
@@ -19,12 +21,13 @@ public class ArrowTower : Tower
         base.Start(); // Важно: вызываем родительский!
         
         // Настройки арбалета
-        _range = _range*1; // Дальняя дистанцияz
+        _range = _range*_rangeScel; // Дальняя дистанцияz
 
-        _damage = _damage * _level; // Высокий урон
-        
+        _damage = _damage1 * _level; // Высокий урон
         Debug.Log("Арбалетная башня построена!");
     }
+
+    public float Damage =>_damage;
     
     // 3. Реализуем ОБЯЗАТЕЛЬНЫЙ метод Attack
     public override void Attack()
@@ -46,6 +49,8 @@ public class ArrowTower : Tower
         }
         
         // Настройка стрелы
+        arrow.GetComponent<ArrowShells>().Initialize(Damage,_pierceChance,gameObject);
+        
 
         
         // Сброс таймера
