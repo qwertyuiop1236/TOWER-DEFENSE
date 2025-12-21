@@ -1,11 +1,9 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public abstract class Tower : MonoBehaviour
 {
     // 1. ОБЩИЕ ДЛЯ ВСЕХ БАШЕН
-    [SerializeField] protected float _range = 3f;
+    [SerializeField] protected float _range = 3;
     [SerializeField] protected float _attackSpeed = 1f; // атак в секунду
     [SerializeField] protected int _cost = 100;
     [SerializeField] protected int _upgradeCost = 50;
@@ -18,9 +16,6 @@ public abstract class Tower : MonoBehaviour
     protected bool _canAttack = true;
     
     // 3. Свойства
-    public float Range => _range;
-    public int Cost => _cost;
-    public int Level => _level;
     public bool CanAttack => _canAttack && _attackTimer <= 0f;
     
     // 4. Виртуальный Start

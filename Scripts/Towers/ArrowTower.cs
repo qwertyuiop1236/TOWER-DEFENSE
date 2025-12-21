@@ -5,29 +5,34 @@ using UnityEngine;
 
 public class ArrowTower : Tower
 {
+
     // 1. УНИКАЛЬНЫЕ поля для арбалета
     [Header("Уникальные поля для арбалета")]
     [SerializeField] private GameObject _arrowPrefab;
     [SerializeField] private Transform _firePoint;
-    [SerializeField] private float _arrowSpeed = 15f;
+    [SerializeField] private float _arrowSpeed;
     [SerializeField] private float _pierceChance = 0.2f; // 20% шанс пробить
-    [SerializeField] private float _damage1 = 150f;
-    [SerializeField] private float _rangeScel=2f;
-
     
+    // Настройка Общих параметров
+    [SerializeField] private float _rangeArrow = 5f;
+    [SerializeField] private float _attackSpeedArrow = 1;
+    [SerializeField] private int  _costArrow = 15;
+    [SerializeField] private int _damageArrow = 50;
+
+
     // 2. Переопределяем Start для настройки
     protected override void Start()
     {
         base.Start(); // Важно: вызываем родительский!
         
-        // Настройки арбалета
-        _range = _range*_rangeScel; // Дальняя дистанцияz
-
-        _damage = _damage1 * _level; // Высокий урон
+        // Настройки параметров арбалета
+        _range = _rangeArrow; // Дальняя дистанцияz
+        _attackSpeed = _attackSpeedArrow; // Скорость стрельбы
+        _cost = _costArrow; // Каличество поинтов
+        _damage = _damageArrow; // Высокий урон
+        
         Debug.Log("Арбалетная башня построена!");
     }
-
-    public float Damage =>_damage;
     
     // 3. Реализуем ОБЯЗАТЕЛЬНЫЙ метод Attack
     public override void Attack()
@@ -49,9 +54,7 @@ public class ArrowTower : Tower
         }
         
         // Настройка стрелы
-        arrow.GetComponent<ArrowShells>().Initialize(Damage,_pierceChance,gameObject);
-        
-
+        arrow.GetComponent<ArrowShells>().Initialize(_damage,_pierceChance,gameObject);
         
         // Сброс таймера
         ResetAttackTimer();
@@ -60,11 +63,17 @@ public class ArrowTower : Tower
     }
     
     // 4. Реализуем ОБЯЗАТЕЛЬНЫЙ метод FindTarget
+    private float _searchTimer;
+    private const float SEARCH_INTERVAL = 0.5f; // Искать раз в полсекунды
     protected override void FindTarget()
     {
         // Ищем самого дальнего врага в радиусе (стратегия арбалета)
         Enemy farthestEnemy = null;
         float farthestDistance = 0f;
+
+        _searchTimer += Time.deltaTime;
+        if (_searchTimer < SEARCH_INTERVAL) return;
+        _searchTimer = 0f;
         
         // Получаем всех врагов
         Enemy[] allEnemies = FindObjectsOfType<Enemy>();

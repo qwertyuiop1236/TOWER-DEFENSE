@@ -3,7 +3,7 @@ using UnityEngine;
 public class ArrowShells : Shells
 {
     //[SerializeField] protected float _pierceChanceArrow;
-    private Enemy _target;
+    // private Enemy _target;
     private GameObject _owner;
     // Start is called before the first frame update
     public override  void Initialize(float damage, float pierceChance, GameObject owner)

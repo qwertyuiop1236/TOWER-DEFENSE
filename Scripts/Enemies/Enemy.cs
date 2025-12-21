@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public abstract class Enemy : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected int _cost =100;
     [SerializeField] protected float _xp=100;
     [SerializeField] protected Canvas canvasText;
+    [SerializeField] protected int _point = 100;
+
 
     protected int _damage;
     private Transform[] waypoints; // Массив точек пути
@@ -17,35 +20,7 @@ public abstract class Enemy : MonoBehaviour
 
     public int Cost => _cost;
     public float XP =>_xp;
-    public virtual void TakeDamage(float Damage)
-    {
-        if (_xp - Damage > 0)
-        {
-            _xp -= Damage;
-        }
-        else
-        {
-            Death();
-        }
-    }
-    protected virtual void Death()
-    {
-        SistemUITest._koin+=Cost;
-        SistemUITest._Point+=Cost;
-        Debug.Log("Полученно денег" + Cost);
-        Debug.Log("Полученно Point" + Cost);
-        Destroy(gameObject);
-    }
-    protected virtual void Attack(int Damage)
-    {
-        // TODO: Нанести урон игроку
-        Debug.Log("Враг достиг конца пути!");
-        
-        SistemUITest._xpPoint-=Damage;
-
-        // Уничтожаем врага
-        Destroy(gameObject);
-    }
+    
     protected virtual void Start()
     {
         // Получаем точки пути от PathManager
@@ -57,6 +32,7 @@ public abstract class Enemy : MonoBehaviour
             Debug.LogError("Нет точек пути! Добавьте Waypoints в PathManager.");
         }
     }
+    
     protected virtual void Update()
     {
         // Если точек нет или дошли до конца - выходим
@@ -85,5 +61,44 @@ public abstract class Enemy : MonoBehaviour
                 Attack(_damage);
             }
         }
+    }
+
+    public virtual void TakeDamage(float Damage)
+    {
+        if (_xp - Damage > 0)
+        {
+            _xp -= Damage;
+        }
+        else
+        {
+            Death();
+        }
+    }
+
+    protected virtual void Death()
+    {
+
+        // Враг НЕ знает про UI, только про экономику
+        StatsSystem.Instance.AddMoney(_cost);
+        // Повышает количество очков
+        StatsSystem.Instance.AddScore(_point);
+        // Увеличение каличества убийств
+        StatsSystem.Instance.EnemyKilled();
+        // OnDeath?.Invoke(this);
+
+        Destroy(gameObject);
+    }
+
+    protected virtual void Attack(int Damage)
+    {
+        // TODO: Нанести урон игроку
+        Debug.Log("Враг достиг конца пути!");
+
+        // Нанесение урона врагом
+        StatsSystem.Instance.TakeDamage(Damage);
+
+        
+        // Уничтожаем врага
+        Destroy(gameObject);
     }
 }
