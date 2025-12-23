@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
+
 
 public abstract class Enemy : MonoBehaviour
 {
@@ -77,16 +75,21 @@ public abstract class Enemy : MonoBehaviour
 
     protected virtual void Death()
     {
+        // Удуление врага 
+        Destroy(gameObject);
 
         // Враг НЕ знает про UI, только про экономику
         StatsSystem.Instance.AddMoney(_cost);
         // Повышает количество очков
         StatsSystem.Instance.AddScore(_point);
         // Увеличение каличества убийств
-        StatsSystem.Instance.EnemyKilled();
+
+
+
+        // StatsSystem.Instance.EnemyKilled();
         // OnDeath?.Invoke(this);
 
-        Destroy(gameObject);
+        
     }
 
     protected virtual void Attack(int Damage)
