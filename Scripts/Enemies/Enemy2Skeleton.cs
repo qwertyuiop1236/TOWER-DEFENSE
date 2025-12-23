@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemySkeleton : Enemy
 {
+    [Header("настройка уникальных параметров Tower")]
     [SerializeField] protected float speedMuveSkeleton;    
     [SerializeField] protected int damageSkeleton;
     [SerializeField] protected float xpSkeleton = 400f;

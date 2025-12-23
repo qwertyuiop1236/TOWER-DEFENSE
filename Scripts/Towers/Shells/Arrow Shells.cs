@@ -10,7 +10,7 @@ public class ArrowShells : Shells
     {
         base.Initialize(damage,pierceChance,owner);
     }
-        void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         // Игнорируем владельца и другие стрелы
         if (other.gameObject == _owner || other.GetComponent<ArrowShells>()) return;
@@ -36,11 +36,11 @@ public class ArrowShells : Shells
             // Если нет пробития - уничтожаем стрелу
             Destroy(gameObject);
         }
+
         else
         {
             // Попадание в стену/препятствие
             Destroy(gameObject);
         }
     }
-    
 }
