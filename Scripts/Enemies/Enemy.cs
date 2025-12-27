@@ -8,7 +8,7 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected float _speedMuve =1f;
     [SerializeField] protected int _cost =100;
     [SerializeField] protected float _xp=100;
-    [SerializeField] protected Canvas canvasText;
+    [SerializeField] protected float _armor=0;
     [SerializeField] protected int _point = 100;
 
 

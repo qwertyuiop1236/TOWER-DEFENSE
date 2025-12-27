@@ -5,18 +5,18 @@ public class EnemyZombieCavaleria : EnemyZombie
     [Header("настройка уникальных параметров ZombieCavaleria")]
     [SerializeField] protected float speedMuveFastZombie = 0.75f;    
     [SerializeField] protected float speedMuveHorse = 3f;  
-    [SerializeField] protected int damageFastZombie = 3;
     [SerializeField] protected float xpFastZombie = 150f;
     [SerializeField] protected float xpHorse = 200f;
 
     
     protected override void Start()
     {
+        _xp= xpFastZombie;
+        
         base.Start();
 
         _speedMuve =speedMuveHorse;
-        _damage= damageFastZombie;
-        _xp = xpFastZombie;
+       
     }
 
     protected override void Update()

@@ -1,32 +1,97 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyZombie : Enemy
 {
-    [Header("настройка уникальных параметров Zombie")]
-    [SerializeField] protected float speedMuveZombie;    
-    [SerializeField] protected int damageZombie;
+    [Header("Настройка уникальных параметров Zombie")]
+    [SerializeField] protected float maxXpZombie;
     [SerializeField] protected float xpZombie = 200f;
+
+    [SerializeField] protected float maxAromorZomdie;
+    [SerializeField] protected float armorZombie = 0;
 
     [SerializeField] protected bool hasShield = false;
     [SerializeField] protected float shieldDamageMultiplier = 1f;
+
+    [Header("UI элементы для отображения параметров")]
+    [SerializeField] protected Image BarXP;
+    [SerializeField] protected Image BarArmor;
     
-    // НОВОЕ: Добавляем поля для управления скоростью
-private float originalSpeed;
+    // Для управления скоростью
+    private float originalSpeed;
     private bool isBoosted = false;
+
+    private float BarRefreshTimeMax = 0.2f;
+    private float BarRefreshTime = 0;
+    private bool DamageRegistration = false;
+
+    // доступные переменыне
+
+    public float _Armor => _armor;
+    
+    protected virtual void Awake()
+    {
+        BarRefreshTime += BarRefreshTimeMax;
+        originalSpeed = _speedMuve;
+        _xp = xpZombie;
+        _armor = armorZombie;
+    }
+
 
     protected override void Start()
     {
         base.Start();
-        
-        originalSpeed = _speedMuve;
-        
-
-        _damage = damageZombie;
-        _xp = xpZombie;
+        maxAromorZomdie += _armor;
+        maxXpZombie += _xp;
     }
 
+
+    protected override void Update()
+    {
+        base.Update();
+        UI_Update();
+    }
+
+
+    protected virtual void UI_Update()
+    {
+        BarRefreshTime -= Time.deltaTime;
+        if (BarRefreshTime <= 0 && DamageRegistration)
+        {
+            BarXP.fillAmount = _xp / xpZombie;
+            BarArmor.fillAmount = _armor / maxAromorZomdie;
+            
+            BarRefreshTime += BarRefreshTimeMax;
+            DamageRegistration = false;
+        }
+    }
+    
+
+    public override void TakeDamage(float damage)
+    {
+        DamageRegistration = true;
+        if (hasShield)
+        {
+            damage *= shieldDamageMultiplier;
+        }
+        else
+        {
+            if (_armor - damage > 0)
+            {
+                _armor -= damage;
+                Debug.Log("Урона по бране " + damage);
+            }
+            else
+            {
+                base.TakeDamage(damage - _armor);
+                _armor=0;
+                Debug.Log("нанесенный урон " + damage);
+                
+            }
+        }
+    }
+    
+    
     // Методы для управления скоростью
     public void ApplySpeedBoost(float multiplier)
     {
@@ -34,7 +99,6 @@ private float originalSpeed;
         {
             isBoosted = true;
             _speedMuve = originalSpeed * multiplier;
-            Debug.Log($"{name} ускорен в {multiplier} раз");
         }
     }
 
@@ -44,33 +108,33 @@ private float originalSpeed;
         {
             isBoosted = false;
             _speedMuve = originalSpeed;
-            Debug.Log($"{name} скорость сброшена");
         }
     }
 
-    // Остальной код остается без изменений...
-    public override void TakeDamage(float damage)
-    {
-        if (hasShield)
-        {
-            damage *= shieldDamageMultiplier;
-        }
-        base.TakeDamage(damage);
-        Debug.Log("нанесенный урон " + damage);
-    }
-
+    
+    // Методы для управления щитом
     public void ApplyShield(float damageReduction, float duration)
     {
         hasShield = true;
         shieldDamageMultiplier = damageReduction;
-        // Визуальный эффект щита
-        // Запустить таймер для снятия щита
     }
 
     public void RemoveShield()
     {
         hasShield = false;
         shieldDamageMultiplier = 1f;
-        // Убрать визуальный эффект
     }
+
+
+    public void AppArmor(float AppArmor)
+    {
+        _armor+=AppArmor;
+    }
+
+
+    public void ArmorZero()
+    {
+        _armor=0;
+    }
+
 }
