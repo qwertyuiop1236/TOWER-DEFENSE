@@ -4,181 +4,213 @@ using UnityEngine;
 
 public class EnemyZombieGeneral : EnemyZombie
 {
-    [Header("настройка уникальных параметров ZombieGeneral")]
-    [SerializeField] protected float speedMuveZombieGeneral;    
-    [SerializeField] protected int damageZombieGeneral;
-    [SerializeField] protected float xpZombieGeneral = 400f;
-
-    [Header("Общие параметры для всех врагов")]
-    [SerializeField] private GameObject zoneArmor; // Зона, где работает щит
-    [SerializeField] private float shieldDuration = 5f; // Длительность щита
-    [SerializeField] private float shieldCooldown = 10f; // Время между наложениями щита
-    [SerializeField] private float shieldDamageReduction = 0.5f; // Снижение урона (50%)
+    [Header("Настройка ауры защиты")]
+    [SerializeField] private float auraRadius = 5f;
+    [SerializeField] private float armorBonus = 50f;
+    [SerializeField] private float auraCheckInterval = 0.5f;
+    [SerializeField] private bool showDebug = true;
     
-    private float shieldTimer = 0f;
-    private List<EnemyZombie> zombiesInZone = new List<EnemyZombie>();
-    private Dictionary<EnemyZombie, Coroutine> activeShields = new Dictionary<EnemyZombie, Coroutine>();
-
+    [Header("2D настройки")]
+    [SerializeField] private LayerMask zombieLayerMask = -1;
+    
+    private List<EnemyZombie> buffedZombies = new List<EnemyZombie>();
+    private CircleCollider2D auraCollider;
+    
     protected override void Start()
     {
         base.Start();
-
-        _speedMuve = speedMuveZombieGeneral;
-        _damage = damageZombieGeneral;
-        _xp = xpZombieGeneral;
         
-        // Начинаем отсчет таймера
-        shieldTimer = shieldCooldown;
-        
-        // Если зона не назначена, используем текущий объект
-        if (zoneArmor == null)
-            zoneArmor = gameObject;
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-        
-        // Обновляем таймер
-        if (shieldTimer > 0)
+        // Создаем или получаем CircleCollider2D для ауры
+        auraCollider = GetComponent<CircleCollider2D>();
+        if (auraCollider == null)
         {
-            shieldTimer -= Time.deltaTime;
-            
-            // Когда таймер достигает 0 - активируем щит
-            if (shieldTimer <= 0)
-            {
-                ApplyShieldToZone();
-                shieldTimer = shieldCooldown; // Сбрасываем таймер
-            }
-        }
-    }
-
-    // Метод для наложения щита на всех зомби в зоне
-    private void ApplyShieldToZone()
-    {
-        // Находим всех зомби в зоне
-        FindZombiesInZone();
-        
-        // Накладываем щит на каждого зомби
-        foreach (var zombie in zombiesInZone)
-        {
-            if (zombie != null && zombie != this)
-            {
-                // Если у зомби уже есть активный щит, останавливаем его
-                if (activeShields.ContainsKey(zombie))
-                {
-                    if (activeShields[zombie] != null)
-                        StopCoroutine(activeShields[zombie]);
-                }
-                
-                // Запускаем новый щит
-                Coroutine shieldCoroutine = StartCoroutine(ApplyShieldToZombie(zombie));
-                activeShields[zombie] = shieldCoroutine;
-            }
+            auraCollider = gameObject.AddComponent<CircleCollider2D>();
+            auraCollider.isTrigger = true;
         }
         
-        Debug.Log($"Щит применен на {zombiesInZone.Count} зомби в зоне");
-    }
-
-    // Поиск зомби в указанной зоне
-    private void FindZombiesInZone()
-    {
-        zombiesInZone.Clear();
+        auraCollider.radius = auraRadius;
         
-        // Определяем радиус зоны (если используется сфера)
-        float zoneRadius = 10f; // Можно сделать настраиваемым
-        
-        // Находим всех врагов в радиусе
-        Collider[] colliders = Physics.OverlapSphere(zoneArmor.transform.position, zoneRadius);
-        
-        foreach (var collider in colliders)
+        // Настраиваем маску слоев
+        if (zombieLayerMask == -1)
         {
-            EnemyZombie zombie = collider.GetComponent<EnemyZombie>();
-            if (zombie != null)
-            {
-                zombiesInZone.Add(zombie);
-            }
+            zombieLayerMask = LayerMask.GetMask("Enemy", "Default");
         }
-    }
-
-    // Корутина для применения щита к конкретному зомби
-    private IEnumerator ApplyShieldToZombie(EnemyZombie zombie)
-    {
-        // Сохраняем оригинальный множитель урона
-        float originalDamageMultiplier = 1f;
         
-        // Если у зомби есть свойство для множителя урона, сохраняем его
-        // Предполагаем, что у EnemyZombie есть свойство или метод для управления уроном
-        // Если нет - нужно будет добавить в базовый класс
+        StartCoroutine(AuraUpdateCoroutine());
         
-        // Устанавливаем снижение урона
-        // Для этого нужен доступ к методу получения урона в базовом классе
-        // Временно используем модификатор через рефлексию или добавим метод в базовый класс
-        
-        // Альтернативный вариант: использовать визуальный эффект щита
-        GameObject shieldEffect = null;
-        
-        // Создаем визуальный эффект щита (если есть префаб)
-        // shieldEffect = Instantiate(shieldPrefab, zombie.transform);
-        
-        Debug.Log($"Щит применен к {zombie.gameObject.name} на {shieldDuration} секунд");
-        
-        // Ждем длительность щита
-        yield return new WaitForSeconds(shieldDuration);
-        
-        // Убираем щит
-        RemoveShieldFromZombie(zombie);
-        
-        if (shieldEffect != null)
-            Destroy(shieldEffect);
-            
-        Debug.Log($"Щит снят с {zombie.gameObject.name}");
-    }
-
-    // Метод для снятия щита
-    private void RemoveShieldFromZombie(EnemyZombie zombie)
-    {
-        if (activeShields.ContainsKey(zombie))
-        {
-            activeShields.Remove(zombie);
-        }
-    }
-
-    // Опционально: метод для проверки попадания в зону при спавне зомби
-    private void OnTriggerEnter(Collider other)
-    {
-        // Если хотим добавлять зомби в зону динамически
-        EnemyZombie zombie = other.GetComponent<EnemyZombie>();
-        if (zombie != null && !zombiesInZone.Contains(zombie))
-        {
-            zombiesInZone.Add(zombie);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        // Удаляем зомби при выходе из зоны
-        EnemyZombie zombie = other.GetComponent<EnemyZombie>();
-        if (zombie != null && zombiesInZone.Contains(zombie))
-        {
-            zombiesInZone.Remove(zombie);
-            RemoveShieldFromZombie(zombie);
-        }
-    }
-
-    public override void TakeDamage(float damage)
-    {
-        base.TakeDamage(damage);
-        Debug.Log("нанесенный урон " + damage);
+        if (showDebug)
+            Debug.Log($"2D Генерал {name} запущен. Радиус ауры: {auraRadius}, бонус брони: {armorBonus}");
     }
     
-    // Визуализация зоны в редакторе
-    private void OnDrawGizmosSelected()
+    private IEnumerator AuraUpdateCoroutine()
     {
-        if (zoneArmor != null)
+        while (true)
         {
-            Gizmos.color = new Color(0, 1, 0, 0.3f);
-            Gizmos.DrawSphere(zoneArmor.transform.position, 10f);
+            UpdateArmorAura();
+            yield return new WaitForSeconds(auraCheckInterval);
         }
+    }
+    
+    private void UpdateArmorAura()
+    {
+        // Ищем зомби в радиусе с помощью Physics2D
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(
+            transform.position, 
+            auraRadius, 
+            zombieLayerMask
+        );
+        
+        List<EnemyZombie> currentZombies = new List<EnemyZombie>();
+        
+        foreach (Collider2D collider in hitColliders)
+        {
+            EnemyZombie zombie = collider.GetComponent<EnemyZombie>();
+            if (zombie != null && zombie != this && zombie.enabled)
+            {
+                currentZombies.Add(zombie);
+            }
+        }
+        
+        // Убираем бонус с тех, кто вышел из радиуса
+        for (int i = buffedZombies.Count - 1; i >= 0; i--)
+        {
+            EnemyZombie zombie = buffedZombies[i];
+            
+            if (zombie == null)
+            {
+                buffedZombies.RemoveAt(i);
+                continue;
+            }
+            
+            if (!currentZombies.Contains(zombie))
+            {
+                RemoveArmorBonus(zombie);
+                buffedZombies.RemoveAt(i);
+            }
+        }
+        
+        // Добавляем бонус новым зомби
+        foreach (EnemyZombie zombie in currentZombies)
+        {
+            if (!buffedZombies.Contains(zombie))
+            {
+                ApplyArmorBonus(zombie);
+                buffedZombies.Add(zombie);
+            }
+        }
+        
+        if (showDebug && currentZombies.Count > 0)
+            Debug.Log($"Аура защиты: {buffedZombies.Count} зомби в радиусе");
+    }
+    
+    // Метод для применения бонуса брони
+    private void ApplyArmorBonus(EnemyZombie zombie)
+    {
+        if (zombie == null) return;
+        
+        // Просто вызываем метод родительского класса
+        zombie.AppArmor(armorBonus);
+        
+        if (showDebug)
+            Debug.Log($"Броня {zombie.name} увеличена до {zombie._Armor}");
+    }
+    
+    // Метод для снятия бонуса брони
+    private void RemoveArmorBonus(EnemyZombie zombie)
+    {
+        if (zombie == null) return;
+        
+        // Уменьшаем броню на величину бонуса
+        zombie.AppArmor(-armorBonus);
+        
+        // Защита от отрицательного значения брони
+        if (zombie._Armor < 0)
+            zombie.ArmorZero();
+        
+        if (showDebug)
+            Debug.Log($"Броня {zombie.name} уменьшена до {zombie._Armor}");
+    }
+    
+    // Использование триггеров 2D для динамического добавления/удаления
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!enabled) return;
+        
+        EnemyZombie zombie = other.GetComponent<EnemyZombie>();
+        if (zombie != null && zombie != this && !buffedZombies.Contains(zombie))
+        {
+            ApplyArmorBonus(zombie);
+            buffedZombies.Add(zombie);
+        }
+    }
+    
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (!enabled) return;
+        
+        EnemyZombie zombie = other.GetComponent<EnemyZombie>();
+        if (zombie != null && buffedZombies.Contains(zombie))
+        {
+            RemoveArmorBonus(zombie);
+            buffedZombies.Remove(zombie);
+        }
+    }
+    
+    protected override void Death()
+    {
+        if (showDebug)
+            Debug.Log($"Генерал умирает, снимаем бонусы брони");
+        
+        // Снимаем бонусы со всех зомби перед смертью
+        foreach (EnemyZombie zombie in buffedZombies)
+        {
+            if (zombie != null)
+            {
+                RemoveArmorBonus(zombie);
+            }
+        }
+        
+        buffedZombies.Clear();
+        StopAllCoroutines();
+        
+        base.Death();
+    }
+    
+    // Визуализация ауры в редакторе
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = new Color(1, 0.5f, 0, 0.3f);
+        Gizmos.DrawWireSphere(transform.position, auraRadius);
+    }
+    
+    void OnDrawGizmos()
+    {
+        if (showDebug && alwaysShowGizmo)
+        {
+            Gizmos.color = new Color(1, 0.5f, 0, 0.1f);
+            Gizmos.DrawSphere(transform.position, auraRadius);
+        }
+    }
+    
+    // Для обратной совместимости
+    [Header("Debug Options")]
+    [SerializeField] private bool alwaysShowGizmo = false;
+    
+    // Метод для проверки сколько зомби сейчас под баффом
+    public int GetBuffCount()
+    {
+        return buffedZombies.Count;
+    }
+    
+    // Метод для получения списка зомби под баффом
+    public List<EnemyZombie> GetBuffedZombies()
+    {
+        return new List<EnemyZombie>(buffedZombies);
+    }
+    
+    // Метод для проверки находится ли зомби под баффом
+    public bool IsZombieBuffed(EnemyZombie zombie)
+    {
+        return buffedZombies.Contains(zombie);
     }
 }
