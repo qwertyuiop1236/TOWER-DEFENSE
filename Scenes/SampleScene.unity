@@ -1281,9 +1281,9 @@ MonoBehaviour:
   _arrowSpeed: 25
   _pierceChance: 0.2
   _rangeArrow: 30
-  _attackSpeedArrow: 1
+  _attackSpeedArrow: 10
   _costArrow: 15
-  _damageArrow: 10
+  _damageArrow: 200
 --- !u!212 &1483413432
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1875,12 +1875,10 @@ MonoBehaviour:
   _moneyText: {fileID: 1735944081}
   _scoreText: {fileID: 1641152255}
   _healthText: {fileID: 350527604}
-  _killsText: {fileID: 350527604}
-  _timeText: {fileID: 975726189}
+  _timeDeforeWaveText: {fileID: 975726189}
   _moneyFormat: $ {0}
   _scoreFormat: 'Score: {0}'
   _healthFormat: 'HP: {0}'
-  _killsFormat: 'Kills: {0}'
 --- !u!4 &1857446233
 Transform:
   m_ObjectHideFlags: 0
@@ -1911,6 +1909,7 @@ MonoBehaviour:
   _startMoney: 100
   _startHealth: 20
   _startScore: 0
+  _startTimeBeforeWave: 180
 --- !u!114 &2067850578 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7079101394359269990, guid: dbfe8c83a6a7496abb2997b123a742b2, type: 3}

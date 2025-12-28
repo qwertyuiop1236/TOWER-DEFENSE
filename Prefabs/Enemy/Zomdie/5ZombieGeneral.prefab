@@ -211,25 +211,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speedMuve: 1
   _cost: 150
-  _xp: 100
-  _armor: 0
+  _maxXp: 0
+  _xp: 450
+  _maxAromor: 0
+  _armor: 50
   _point: 450
-  speedMuveZombie: 0
-  damageZombie: 0
-  xpZombie: 200
-  maxAromorZomdie: 0
-  armorZombie: 0
   hasShield: 0
   shieldDamageMultiplier: 1
   BarXP: {fileID: 5135175512498987256}
   BarArmor: {fileID: 9178194299223798074}
-  speedMuveZombieGeneral: 0.5
-  damageZombieGeneral: 4
-  xpZombieGeneral: 450
-  zoneArmor: {fileID: 0}
-  shieldDuration: 2
-  shieldCooldown: 10
-  shieldDamageReduction: 0.5
+  auraRadius: 5
+  armorBonus: 50
+  auraCheckInterval: 0.5
+  showDebug: 1
+  zombieLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  alwaysShowGizmo: 0
 --- !u!1 &3038447070708188512
 GameObject:
   m_ObjectHideFlags: 0

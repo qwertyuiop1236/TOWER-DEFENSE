@@ -7,7 +7,9 @@ public abstract class Enemy : MonoBehaviour
     [Header("Общие параметры для всех врагов")]
     [SerializeField] protected float _speedMuve =1f;
     [SerializeField] protected int _cost =100;
+    [SerializeField] protected float _maxXp;
     [SerializeField] protected float _xp=100;
+    [SerializeField] protected float _maxAromor;
     [SerializeField] protected float _armor=0;
     [SerializeField] protected int _point = 100;
 
@@ -17,10 +19,13 @@ public abstract class Enemy : MonoBehaviour
     private int currentIndex = 0;  // Текущая точка
 
     public int Cost => _cost;
-    public float XP =>_xp;
+    public float XP => _xp;
+    public float Armor => _armor;
     
     protected virtual void Start()
     {
+        _maxXp += _xp;
+        _maxAromor += _armor;
         // Получаем точки пути от PathManager
         waypoints = PathManager.Instance.waypoints;
         

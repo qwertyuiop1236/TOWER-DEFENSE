@@ -15,7 +15,6 @@ public class EnemyZombieHerald : EnemyZombie
     [Header("Debug")]
     [SerializeField] private bool showDebug = true;
     [SerializeField] private bool alwaysShowGizmo = false;
-
     private List<EnemyZombie> buffedZombies = new List<EnemyZombie>();
     private CircleCollider2D triggerCollider;
 

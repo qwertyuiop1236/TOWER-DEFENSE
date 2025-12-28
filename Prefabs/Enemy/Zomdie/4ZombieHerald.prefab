@@ -465,19 +465,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speedMuve: 1
   _cost: 150
-  _xp: 100
+  _maxXp: 0
+  _xp: 450
+  _maxAromor: 0
   _armor: 0
   _point: 450
-  speedMuveZombie: 0.5
-  damageZombie: 4
-  xpZombie: 450
-  maxAromorZomdie: 0
-  armorZombie: 0
   hasShield: 1
   shieldDamageMultiplier: 1
   BarXP: {fileID: 5212548543553736333}
   BarArmor: {fileID: 6722488096828906014}
-  auraRadius: 2
+  auraRadius: 0.5
   speedBoostMultiplier: 3
   auraCheckInterval: 1
   zombieLayerMask:

@@ -9,23 +9,24 @@ public class StatsSystem : MonoBehaviour
     public event Action<int> OnMoneyChanged;
     public event Action<int> OnScoreChanged;
     public event Action<int> OnHealthChanged;
-    public event Action<int> OnEnemiesKilledChanged;
+    public event Action<float> OnTimeBeforeWaveChanged; // Исправлено имя события
     
     // ДАННЫЕ
     [SerializeField] private int _startMoney = 100;
     [SerializeField] private int _startHealth = 20;
     [SerializeField] private int _startScore = 0;
+    [SerializeField] private float _startTimeBeforeWave = 300f; // Исправлено имя
     
     private int _money;
     private int _score;
     private int _health;
-    private int _enemiesKilled;
+    private float _timeBefore; // Исправлено имя
     
     // СВОЙСТВА (только чтение)
     public int Money => _money;
     public int Score => _score;
     public int Health => _health;
-    public int EnemiesKilled => _enemiesKilled;
+    public float TimeBefore => _timeBefore; // Исправлено имя
     
     void Awake()
     {
@@ -40,23 +41,49 @@ public class StatsSystem : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
+
+    void Update()
+    {
+        if (_timeBefore > 0)
+        {
+            float previousTime = _timeBefore;
+            _timeBefore -= Time.deltaTime;
+            
+            // Важно: вызываем событие только если время действительно изменилось
+            // (больше чем на 0.1 секунды, чтобы не вызывать каждый кадр)
+            if (Mathf.FloorToInt(previousTime) != Mathf.FloorToInt(_timeBefore))
+            {
+                OnTimeBeforeWaveChanged?.Invoke(_timeBefore);
+            }
+            
+            // Проверка окончания таймера
+            if (_timeBefore <= 0)
+            {
+                _timeBefore = 0;
+                OnTimeBeforeWaveChanged?.Invoke(0);
+                // Здесь можно добавить логику начала волны
+                Debug.Log("Время вышло! Начинается волна!");
+            }
+        }
+    }
+
     void InitializeStats()
     {
         _money = _startMoney;
         _health = _startHealth;
         _score = _startScore;
-        _enemiesKilled = 0;
+        _timeBefore = _startTimeBeforeWave;
         
         // Уведомляем о начальных значениях
         OnMoneyChanged?.Invoke(_money);
         OnHealthChanged?.Invoke(_health);
         OnScoreChanged?.Invoke(_score);
+        OnTimeBeforeWaveChanged?.Invoke(_timeBefore);
     }
     
     // МЕТОДЫ ДЛЯ ИЗМЕНЕНИЯ СТАТИСТИКИ
 
-    // Увеличение каличества манет
+    // Увеличение количества монет
     public void AddMoney(int amount)
     {
         if (amount <= 0) return;
@@ -64,7 +91,7 @@ public class StatsSystem : MonoBehaviour
         OnMoneyChanged?.Invoke(_money);
     }
     
-    // Уменьшение каличества манет
+    // Уменьшение количества монет
     public bool TrySpendMoney(int amount)
     {
         if (_money < amount) return false;
@@ -81,7 +108,7 @@ public class StatsSystem : MonoBehaviour
         OnScoreChanged?.Invoke(_score);
     }
     
-    // Изменение каличества здаровья
+    // Изменение количества здоровья
     public void TakeDamage(int damage)
     {
         if (damage <= 0) return;
@@ -89,19 +116,12 @@ public class StatsSystem : MonoBehaviour
         OnHealthChanged?.Invoke(_health);
     }
     
-    // Увеличение каличества здаровью
+    // Увеличение количества здоровья
     public void Heal(int amount)
     {
         if (amount <= 0) return;
         _health += amount;
         OnHealthChanged?.Invoke(_health);
-    }
-    
-    // Увеличение количества убийств
-    public void EnemyKilled()
-    {
-        _enemiesKilled++;
-        OnEnemiesKilledChanged?.Invoke(_enemiesKilled);
     }
     
     // СБРОС СТАТИСТИКИ (для новой игры)
@@ -110,11 +130,18 @@ public class StatsSystem : MonoBehaviour
         _money = _startMoney;
         _health = _startHealth;
         _score = _startScore;
-        _enemiesKilled = 0;
+        _timeBefore = _startTimeBeforeWave;
         
         OnMoneyChanged?.Invoke(_money);
         OnHealthChanged?.Invoke(_health);
         OnScoreChanged?.Invoke(_score);
-        OnEnemiesKilledChanged?.Invoke(_enemiesKilled);
+        OnTimeBeforeWaveChanged?.Invoke(_timeBefore);
+    }
+
+    // СБРОС ТАЙМЕРА ОЖИДАНИЯ ВОЛН (для подготовки к следующей волне)
+    public void ResetTimeBefore() // Исправлено имя метода
+    {
+        _timeBefore = _startTimeBeforeWave;
+        OnTimeBeforeWaveChanged?.Invoke(_timeBefore);
     }
 }

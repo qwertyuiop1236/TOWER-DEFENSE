@@ -390,22 +390,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speedMuve: 1
   _cost: 75
-  _xp: 100
+  _maxXp: 0
+  _xp: 300
+  _maxAromor: 0
   _armor: 0
   _point: 250
-  speedMuveZombie: 0
-  damageZombie: 0
-  xpZombie: 200
-  maxAromorZomdie: 0
-  armorZombie: 0
   hasShield: 0
   shieldDamageMultiplier: 1
   BarXP: {fileID: 3837158138259662020}
   BarArmor: {fileID: 5002662560008729119}
   speedMuveFastZombie: 0.75
   speedMuveHorse: 3
-  damageFastZombie: 3
-  xpFastZombie: 150
+  xpFastZombie: 200
   xpHorse: 200
 --- !u!1 &5839960237104554741
 GameObject:

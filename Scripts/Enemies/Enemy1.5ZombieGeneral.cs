@@ -15,7 +15,7 @@ public class EnemyZombieGeneral : EnemyZombie
     
     private List<EnemyZombie> buffedZombies = new List<EnemyZombie>();
     private CircleCollider2D auraCollider;
-    
+
     protected override void Start()
     {
         base.Start();

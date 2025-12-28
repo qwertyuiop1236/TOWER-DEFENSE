@@ -4,12 +4,6 @@ using UnityEngine.UI;
 public class EnemyZombie : Enemy
 {
     [Header("Настройка уникальных параметров Zombie")]
-    [SerializeField] protected float maxXpZombie;
-    [SerializeField] protected float xpZombie = 200f;
-
-    [SerializeField] protected float maxAromorZomdie;
-    [SerializeField] protected float armorZombie = 0;
-
     [SerializeField] protected bool hasShield = false;
     [SerializeField] protected float shieldDamageMultiplier = 1f;
 
@@ -25,7 +19,7 @@ public class EnemyZombie : Enemy
     private float BarRefreshTime = 0;
     private bool DamageRegistration = false;
 
-    // доступные переменыне
+    // Доступные переменыне
 
     public float _Armor => _armor;
     
@@ -33,16 +27,12 @@ public class EnemyZombie : Enemy
     {
         BarRefreshTime += BarRefreshTimeMax;
         originalSpeed = _speedMuve;
-        _xp = xpZombie;
-        _armor = armorZombie;
     }
 
 
     protected override void Start()
     {
         base.Start();
-        maxAromorZomdie += _armor;
-        maxXpZombie += _xp;
     }
 
 
@@ -58,8 +48,8 @@ public class EnemyZombie : Enemy
         BarRefreshTime -= Time.deltaTime;
         if (BarRefreshTime <= 0 && DamageRegistration)
         {
-            BarXP.fillAmount = _xp / xpZombie;
-            BarArmor.fillAmount = _armor / maxAromorZomdie;
+            BarXP.fillAmount = _xp / _maxXp;
+            BarArmor.fillAmount = _armor / _maxAromor;
             
             BarRefreshTime += BarRefreshTimeMax;
             DamageRegistration = false;
