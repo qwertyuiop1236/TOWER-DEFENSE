@@ -468,9 +468,9 @@ MonoBehaviour:
   _maxXp: 0
   _xp: 450
   _maxAromor: 0
-  _armor: 0
+  _armor: 50
   _point: 450
-  hasShield: 1
+  hasShield: 0
   shieldDamageMultiplier: 1
   BarXP: {fileID: 5212548543553736333}
   BarArmor: {fileID: 6722488096828906014}
