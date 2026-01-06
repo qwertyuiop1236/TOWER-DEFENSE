@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ArrowTower : Tower
@@ -14,22 +11,16 @@ public class ArrowTower : Tower
     [SerializeField] private float _pierceChance = 0.2f; // 20% шанс пробить
     
     // Настройка Общих параметров
-    [SerializeField] private float _rangeArrow = 5f;
-    [SerializeField] private float _attackSpeedArrow = 1;
-    [SerializeField] private int  _costArrow = 15;
-    [SerializeField] private int _damageArrow = 50;
+    // [SerializeField] private float _rangeArrow = 5f;
+    // [SerializeField] private float _attackSpeedArrow = 1;
+    // [SerializeField] private int  _costArrow = 15;
+    // [SerializeField] private int _damageArrow = 50;
 
 
     // 2. Переопределяем Start для настройки
     protected override void Start()
     {
         base.Start(); // Важно: вызываем родительский!
-        
-        // Настройки параметров арбалета
-        _range = _rangeArrow; // Дальняя дистанцияz
-        _attackSpeed = _attackSpeedArrow; // Скорость стрельбы
-        _cost = _costArrow; // Каличество поинтов
-        _damage = _damageArrow; // Высокий урон
         
         Debug.Log("Арбалетная башня построена!");
     }
@@ -62,36 +53,39 @@ public class ArrowTower : Tower
         Debug.Log($"Арбалет стреляет! Урон: {_damage}");
     }
     
-    // 4. Реализуем ОБЯЗАТЕЛЬНЫЙ метод FindTarget
-    private float _searchTimer;
-    private const float SEARCH_INTERVAL = 0.5f; // Искать раз в полсекунды
-    protected override void FindTarget()
-    {
-        // Ищем самого дальнего врага в радиусе (стратегия арбалета)
-        Enemy farthestEnemy = null;
-        float farthestDistance = 0f;
+// 4. Реализуем ОБЯЗАТЕЛЬНЫЙ метод FindTarget
+private float _searchTimer;
+private const float SEARCH_INTERVAL = 0.5f; // Искать раз в полсекунды
 
-        _searchTimer += Time.deltaTime;
-        if (_searchTimer < SEARCH_INTERVAL) return;
-        _searchTimer = 0f;
+protected override void FindTarget()
+{
+    // Ищем самого ближайшего врага в радиусе
+    Enemy closestEnemy = null;
+    float closestDistance = float.MaxValue; // Начинаем с максимального значения
+
+    _searchTimer += Time.deltaTime;
+    if (_searchTimer < SEARCH_INTERVAL) return;
+    _searchTimer = 0f;
+    
+    // Получаем всех врагов
+    Enemy[] allEnemies = FindObjectsOfType<Enemy>();
+    
+    foreach (Enemy enemy in allEnemies)
+    {
+        if (!IsInRange(enemy.transform.position)) continue;
         
-        // Получаем всех врагов
-        Enemy[] allEnemies = FindObjectsOfType<Enemy>();
+        float distance = Vector3.Distance(transform.position, enemy.transform.position);
         
-        foreach (Enemy enemy in allEnemies)
+        // Ищем минимальное расстояние (ближайший враг)
+        if (distance < closestDistance)
         {
-            if (!IsInRange(enemy.transform.position)) continue;
-            
-            float distance = Vector3.Distance(transform.position, enemy.transform.position);
-            if (distance > farthestDistance)
-            {
-                farthestDistance = distance;
-                farthestEnemy = enemy;
-            }
+            closestDistance = distance;
+            closestEnemy = enemy;
         }
-        
-        _currentTarget = farthestEnemy;
     }
+    
+    _currentTarget = closestEnemy;
+}
     
     // 5. Переопределяем Upgrade для уникальных улучшений
     public override bool Upgrade()

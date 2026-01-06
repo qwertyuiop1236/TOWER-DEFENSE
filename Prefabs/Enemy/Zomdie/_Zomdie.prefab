@@ -211,14 +211,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speedMuve: 1
   _cost: 50
+  _maxXp: 0
   _xp: 200
-  canvasText: {fileID: 0}
+  _maxAromor: 0
+  _armor: 0
   _point: 100
-  speedMuveZombie: 0.75
-  damageZombie: 1
-  xpZombie: 200
   hasShield: 0
   shieldDamageMultiplier: 1
+  BarXP: {fileID: 2930778452425394516}
+  BarArmor: {fileID: 4682441766770200343}
 --- !u!1 &5565656929476095131
 GameObject:
   m_ObjectHideFlags: 0

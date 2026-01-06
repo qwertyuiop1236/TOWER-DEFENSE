@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public class MagicTower : Tower
 {
@@ -14,12 +12,6 @@ public class MagicTower : Tower
     protected override void Start()
     {
         base.Start();
-        
-        // Настройки магической башни
-        _range = 2.5f; // Короткая дистанция
-        _attackSpeed = 1.5f; // Быстрая
-        _cost = 150;
-        _damage = 8f * _level; // Низкий урон, но с эффектами
         
         Debug.Log("Магическая башня построена!");
     }
@@ -35,42 +27,53 @@ public class MagicTower : Tower
         Vector3 direction = (_currentTarget.transform.position - _castPoint.position).normalized;
         spell.transform.right = direction;
         
+        // Добавляем движение
+        Rigidbody2D rb = spell.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.velocity = direction * _attackSpeed;
+        }
+        // Настройка стрелы
+        spell.GetComponent<ArrowShells>().Initialize(_damage,10,gameObject);
+
         ResetAttackTimer();
+        
         Debug.Log($"Магия! Урон: {_damage}, Замедление: {_slowEffect:P0}");
     }
+
+private float _searchTimer;
+private const float SEARCH_INTERVAL = 0.5f; // Искать раз в полсекунды
     
-    protected override void FindTarget()
+protected override void FindTarget()
+{
+    // Ищем самого ближайшего врага в радиусе
+    Enemy closestEnemy = null;
+    float closestDistance = float.MaxValue; // Начинаем с максимального значения
+
+    _searchTimer += Time.deltaTime;
+    if (_searchTimer < SEARCH_INTERVAL) return;
+    _searchTimer = 0f;
+    
+    // Получаем всех врагов
+    Enemy[] allEnemies = FindObjectsOfType<Enemy>();
+    
+    foreach (Enemy enemy in allEnemies)
     {
-        // Маг выбирает самого быстрого врага
-        Enemy fastestEnemy = null;
-        // float maxSpeed = 0f;
+        if (!IsInRange(enemy.transform.position)) continue;
         
-        Enemy[] allEnemies = FindObjectsOfType<Enemy>();
+        float distance = Vector3.Distance(transform.position, enemy.transform.position);
         
-        foreach (Enemy enemy in allEnemies)
+        // Ищем минимальное расстояние (ближайший враг)
+        if (distance < closestDistance)
         {
-            if (!IsInRange(enemy.transform.position)) continue;
-            
-            // Временная логика: берем ближайшего врага
-            if (fastestEnemy == null)
-            {
-                fastestEnemy = enemy;
-            }
-            else
-            {
-                float currentDistance = Vector3.Distance(transform.position, enemy.transform.position);
-                float fastestDistance = Vector3.Distance(transform.position, fastestEnemy.transform.position);
-                
-                if (currentDistance < fastestDistance)
-                {
-                    fastestEnemy = enemy;
-                }
-            }
+            closestDistance = distance;
+            closestEnemy = enemy;
         }
-        
-        _currentTarget = fastestEnemy;
     }
     
+    _currentTarget = closestEnemy;
+}
+
     public override bool Upgrade()
     {
         bool success = base.Upgrade();
