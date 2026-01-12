@@ -52,7 +52,7 @@ public class SimpleWaveSpawner : MonoBehaviour
         
         Debug.Log("Все волны завершены");
     }
-
+    
     IEnumerator SpawnWave(Wave wave)
     {
         if (wave.enemies == null || wave.enemies.Length == 0)

@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72be117fe51fddb16b2ad72379722d26, type: 3}
+  m_Name: TD_ArrowTower
+  m_EditorClassIdentifier: 
+  towerName: "\u0410\u0440\u0431\u0430\u043B\u0435\u0442\u043D\u0430\u044F \u0431\u0430\u0448\u043D\u044F"
+  description: "\u0421\u0442\u0440\u0435\u043B\u044F\u0435\u0442 \u0441\u0442\u0440\u0435\u043B\u0430\u043C\u0438\u0421\u0442\u0440\u0435\u043B\u044F\u0435\u0442
+    \u0441\u0442\u0440\u0435\u043B\u0430\u043C\u0438"
+  baseCost: 100
+  prefab: {fileID: 5743581827920323864, guid: f96c170a435f92034a97a7dd323aeb90, type: 3}
+  ghostPrefab: {fileID: 225058341817574732, guid: d37a81d4c343caafa982c72d51cc4cda, type: 3}
+  baseDamage: 10
+  baseRange: 5
+  baseAttackSpeed: 1
+  damageType: 0
+  branchA:
+    branchName: "\u0421\u043D\u0430\u0439\u043F\u0435\u0440\u0421\u043D\u0430\u0439\u043F\u0435\u0440"
+    upgrades:
+    - cost: 50
+      damageBonus: 15
+      rangeBonus: 6
+      speedBonus: 0
+      upgradeName: 
+      description: 
+      visualModel: {fileID: 0}
+  branchB:
+    branchName: "\u041C\u0443\u043B\u044C\u0442\u0438\u0432\u044B\u0441\u0442\u0440\u0435\u043B\u041C\u0443\u043B\u044C\u0442\u0438\u0432\u044B\u0441\u0442\u0440\u0435\u043B"
+    upgrades:
+    - cost: 60
+      damageBonus: 10
+      rangeBonus: 5
+      speedBonus: 2
+      upgradeName: 
+      description: 
+      visualModel: {fileID: 0}
+  icon: {fileID: 0}

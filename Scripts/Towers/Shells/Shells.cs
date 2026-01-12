@@ -8,10 +8,10 @@ public abstract class Shells : MonoBehaviour
     private GameObject _owner;
 
 
-public virtual void Initialize(float damage, float pierceChance, GameObject owner)
-{
-    _damageShells = damage;
-    _pierceChanceArrow = pierceChance;
-    _owner = owner;
-}
+    public virtual void Initialize(float damage, float pierceChance, GameObject owner)
+    {
+        _damageShells = damage;
+        _pierceChanceArrow = pierceChance;
+        _owner = owner;
+    }
 }

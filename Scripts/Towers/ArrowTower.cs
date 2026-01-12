@@ -1,8 +1,8 @@
+using System;
 using UnityEngine;
 
 public class ArrowTower : Tower
 {
-
     // 1. УНИКАЛЬНЫЕ поля для арбалета
     [Header("Уникальные поля для арбалета")]
     [SerializeField] private GameObject _arrowPrefab;

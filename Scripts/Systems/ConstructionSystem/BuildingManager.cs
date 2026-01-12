@@ -20,6 +20,8 @@ public class TowerBuildManager : MonoBehaviour
     
     void HandleBuildMode()
     {
+        Debug.Log($"BuildMode активен. Tower: {_selectedTower}");
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         
@@ -29,6 +31,8 @@ public class TowerBuildManager : MonoBehaviour
             BuildPad pad = hit.collider.GetComponent<BuildPad>();
             if (pad != null)
             {
+                Debug.Log($"Наведен на BuildPad: {hit.collider.name}");
+
                 _hoveredPad = pad;
                 
                 // Позиционируем призрак
@@ -55,6 +59,7 @@ public class TowerBuildManager : MonoBehaviour
         }
         else
         {
+             Debug.Log("Не наведен на BuildPad");
             // Скрываем призрак если не над BuildPad
             if (_currentGhost != null)
                 _currentGhost.SetActive(false);

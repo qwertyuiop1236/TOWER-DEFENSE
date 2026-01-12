@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -32,11 +30,15 @@ public class BuildPad : MonoBehaviour
     // Вызывается при клике на пад
     public void OnPadClicked()
     {
+        Debug.Log($"Кликнут BuildPad! Occupied: {IsOccupied}, TowerData: ");
+        
         if (IsOccupied && CurrentTower != null)
         {
-            // Показываем UI улучшения/продажи
-            ShowUpgradeUI(true);
-            OnTowerSelected?.Invoke(CurrentTower);
+            // ... существующий код
+        }
+        else if (!IsOccupied)
+        {
+            Debug.Log("BuildPad свободен! Можно строить.");
         }
     }
     
