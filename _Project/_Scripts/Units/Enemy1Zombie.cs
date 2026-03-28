@@ -53,7 +53,7 @@ public class EnemyZombie : Enemy
         if (BarRefreshTime <= 0 && DamageRegistration)
         {
             BarXP.fillAmount = _xp / _maxXp;
-            BarArmor.fillAmount = _armor / _maxAromor;
+            BarArmor.fillAmount = _armor / _maxArmor;
             
             BarRefreshTime += BarRefreshTimeMax;
             DamageRegistration = false;
@@ -130,9 +130,9 @@ public class EnemyZombie : Enemy
     }
 
 
-    public void AppArmor(float AppArmor)
+    public void AddArmor(float AddArmor)
     {
-        _armor+=AppArmor;
+        _armor+=AddArmor;
     }
 
 

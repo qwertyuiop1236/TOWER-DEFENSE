@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Shells : MonoBehaviour
+public abstract class ProjectileBase : MonoBehaviour
 {
     [SerializeField] protected float _damageShells;
     [SerializeField] protected float _pierceChanceArrow;

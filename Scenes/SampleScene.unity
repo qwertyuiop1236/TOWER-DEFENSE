@@ -397,9 +397,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73543dba2f52b8c55b8ead927c05ca5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buildPadLayer:
+  _buildPadLayerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
 --- !u!4 &230339958
 Transform:
   m_ObjectHideFlags: 0
@@ -1419,6 +1419,43 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5567848559088010682, guid: da1f2f4fb46cf950188eca920823a523, type: 3}
   m_PrefabInstance: {fileID: 1123704333}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1508940612 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5743581827920323864, guid: f96c170a435f92034a97a7dd323aeb90, type: 3}
+  m_PrefabInstance: {fileID: 1908297170}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1508940615 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1534685445814315458, guid: f96c170a435f92034a97a7dd323aeb90, type: 3}
+  m_PrefabInstance: {fileID: 1908297170}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1508940616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1508940612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b5ca76bef7bc9c7f91a4e38da98e7f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds: []
+  randSound: []
+  _range: 3
+  _attackSpeed: 1
+  _cost: 100
+  _upgradeCost: 50
+  _level: 1
+  _currentVisualModel: {fileID: 0}
+  _visualAnchor: {fileID: 1508940615}
+  _myBuildPad: {fileID: 0}
+  _towerData: {fileID: 11400000, guid: 40f4f0b4a5babb1d9b46c16a5009f9f7, type: 2}
+  _arrowPrefab: {fileID: 0}
+  _firePoint: {fileID: 0}
+  _arrowSpeed: 0
+  _pierceChance: 0.2
 --- !u!1 &1641152253
 GameObject:
   m_ObjectHideFlags: 0
@@ -1875,6 +1912,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArrowTower12
       objectReference: {fileID: 0}
+    - target: {fileID: 225058341817574732, guid: d37a81d4c343caafa982c72d51cc4cda, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 858600114774421718, guid: d37a81d4c343caafa982c72d51cc4cda, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.114489
@@ -1953,7 +1994,7 @@ MonoBehaviour:
   _moneyText: {fileID: 1735944081}
   _scoreText: {fileID: 1641152255}
   _healthText: {fileID: 350527604}
-  _timeDeforeWaveText: {fileID: 975726189}
+  _timeBeforeWaveText: {fileID: 0}
   _moneyFormat: $ {0}
   _scoreFormat: 'Score: {0}'
   _healthFormat: 'HP: {0}'
@@ -2040,10 +2081,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArrowTower
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4791852739975976256, guid: f96c170a435f92034a97a7dd323aeb90, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5743581827920323864, guid: f96c170a435f92034a97a7dd323aeb90, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1508940616}
   m_SourcePrefab: {fileID: 100100000, guid: f96c170a435f92034a97a7dd323aeb90, type: 3}
 --- !u!1 &2069158698
 GameObject:
@@ -2300,7 +2345,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3380217852924382795, guid: 2d58732daea4556488dbcb5f23695879, type: 3}
       propertyPath: waves.Array.data[0].enemies.Array.data[0].count
-      value: 100
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3380217852924382795, guid: 2d58732daea4556488dbcb5f23695879, type: 3}
       propertyPath: waves.Array.data[0].enemies.Array.data[0].enemyPrefab

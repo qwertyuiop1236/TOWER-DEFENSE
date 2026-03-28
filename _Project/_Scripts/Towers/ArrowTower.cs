@@ -53,7 +53,7 @@ public class ArrowTower : Tower
 
 
         // Настройка стрелы
-        arrow.GetComponent<ArrowShells>().Initialize(_damage,_pierceChance,gameObject);
+        arrow.GetComponent<ProjectileBase>().Initialize(_damage,_pierceChance,gameObject);
         
         // Сброс таймера
         ResetAttackTimer();

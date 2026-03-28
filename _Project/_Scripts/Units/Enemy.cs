@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public abstract class Enemy : Sounds
+public abstract class Enemy : AudioSystem
 {
     // ОБЩИЕ ДЛЯ ВСЕХ ВРАГОВ
     [Header("Общие параметры для всех врагов")]
@@ -9,7 +9,7 @@ public abstract class Enemy : Sounds
     [SerializeField] protected int _cost =100;
     [SerializeField] protected float _maxXp;
     [SerializeField] protected float _xp=100;
-    [SerializeField] protected float _maxAromor;
+    [SerializeField] protected float _maxArmor;
     [SerializeField] protected float _armor=0;
     [SerializeField] protected int _point = 100;
 
@@ -24,15 +24,17 @@ public abstract class Enemy : Sounds
     
     protected virtual void Start()
     {
-        _maxXp += _xp;
-        _maxAromor += _armor;
-        // Получаем точки пути от PathManager
-        waypoints = PathManager.Instance.waypoints;
-        
-        // Проверяем что точки есть
-        if (waypoints == null || waypoints.Length == 0)
-        {
-            Debug.LogError("Нет точек пути! Добавьте Waypoints в PathManager.");
+        if(waypoints != null && waypoints.Length > 1){;
+            _maxXp += _xp;
+            _maxArmor += _armor;
+            // Получаем точки пути от PathManager
+            waypoints = PathManager.Instance.waypoints;
+            
+            // Проверяем что точки есть
+            if (waypoints == null || waypoints.Length == 0)
+            {
+                Debug.LogError("Нет точек пути! Добавьте Waypoints в PathManager.");
+            }
         }
     }
     

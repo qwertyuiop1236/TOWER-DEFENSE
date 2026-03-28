@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _moneyText;
     [SerializeField] private TMP_Text _scoreText;
     [SerializeField] private TMP_Text _healthText;
-    [SerializeField] private TMP_Text _timeDeforeWaveText;
+    [SerializeField] private TMP_Text _timeBeforeWaveText;
     
     [Header("Форматирование")]
     [SerializeField] private string _moneyFormat = "$ {0}";
@@ -49,7 +49,7 @@ void Start()
     {
         int minutes = Mathf.FloorToInt(seconds / 60);
         int secs = Mathf.FloorToInt(seconds % 60);
-        _timeDeforeWaveText.text = $"{minutes:00}:{secs:00}";
+        _timeBeforeWaveText.text = $"{minutes:00}:{secs:00}";
     }
     
     // В методе OnDestroy отписка

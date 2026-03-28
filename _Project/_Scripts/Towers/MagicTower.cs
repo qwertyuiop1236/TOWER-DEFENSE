@@ -41,7 +41,7 @@ public class MagicTower : Tower
         PlaySound(0, random: true);
 
         // Настройка стрелы
-        spell.GetComponent<ArrowShells>().Initialize(_damage,10,gameObject);
+        spell.GetComponent<ProjectileBase>().Initialize(_damage,10,gameObject);
 
         ResetAttackTimer();
         

@@ -3,7 +3,7 @@ using UnityEngine;
 public class TowerBuildManager : MonoBehaviour
 {
     [Header("Настройки")]
-    [SerializeField] private LayerMask _buildPadLayer;
+    [SerializeField] private LayerMask _buildPadLayerMask;
     
     [Header("Текущее состояние")]
     private TowerData _selectedTower;
@@ -19,7 +19,7 @@ public class TowerBuildManager : MonoBehaviour
             
             // 2D Raycast
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, 100f, _buildPadLayer);
+            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, 100f, _buildPadLayerMask);
             
             Debug.Log($"2D Raycast: {hit.collider != null}, MousePos: {mousePos}");
             
@@ -34,11 +34,11 @@ public class TowerBuildManager : MonoBehaviour
     
     void HandleBuildMode()
     {
-        if (!_isBuildMode) return;
+        if (!_isBuildMode && Camera.main == null) return;
         
         // 2D Raycast
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, 100f, _buildPadLayer);
+        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, 100f, _buildPadLayerMask);
         
         // Визуальная отладка (видно в сцене)
         Debug.DrawRay(mousePos, Vector2.up * 0.1f, Color.red, 0.1f);

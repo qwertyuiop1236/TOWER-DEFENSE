@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ArrowShells : Shells
+public class ArrowProjectile : ProjectileBase
 {
     //[SerializeField] protected float _pierceChanceArrow;
     // private Enemy _target;
@@ -13,7 +13,7 @@ public class ArrowShells : Shells
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Игнорируем владельца и другие стрелы
-        if (other.gameObject == _owner || other.GetComponent<ArrowShells>()) return;
+        if (other.gameObject == _owner || other.GetComponent<ProjectileBase>()) return;
         
         // Проверяем, враг ли это
         Enemy enemy = other.GetComponent<Enemy>();

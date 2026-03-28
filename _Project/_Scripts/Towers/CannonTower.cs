@@ -52,7 +52,7 @@ public class CannonTower : Tower
     {
         // Пушка выбирает самого здорового врага (танка)
         Enemy strongestEnemy = null;
-        float maxHealth = 0f;
+        //float maxHealth = 0f;
         
         Enemy[] allEnemies = FindObjectsOfType<Enemy>();
         

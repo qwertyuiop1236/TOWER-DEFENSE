@@ -113,7 +113,7 @@ public class EnemyZombieGeneral : EnemyZombie
         if (zombie == null) return;
         
         // Просто вызываем метод родительского класса
-        zombie.AppArmor(armorBonus);
+        zombie.AddArmor(armorBonus);
         
         if (showDebug)
             Debug.Log($"Броня {zombie.name} увеличена до {zombie._Armor}");
@@ -125,7 +125,7 @@ public class EnemyZombieGeneral : EnemyZombie
         if (zombie == null) return;
         
         // Уменьшаем броню на величину бонуса
-        zombie.AppArmor(-armorBonus);
+        zombie.AddArmor(-armorBonus);
         
         // Защита от отрицательного значения брони
         if (zombie._Armor < 0)

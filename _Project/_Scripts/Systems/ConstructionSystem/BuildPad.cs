@@ -52,28 +52,28 @@ void Start()
     // Строительство башни
     public bool BuildTower(TowerData towerData)
     {
-        if (IsOccupied || towerData == null) return false;
-        
-        // Создаем башню
-        GameObject towerGO = Instantiate(towerData.prefab, transform.position, Quaternion.identity);
-        CurrentTower = towerGO.GetComponent<Tower>();
-        
-        if (CurrentTower == null)
-        {
-            Debug.LogError($"Префаб {towerData.prefab.name} не содержит Tower!");
-            Destroy(towerGO);
-            return false;
-        }
-        
-        // Инициализируем с данными
-        CurrentTower.Initialize(towerData, this);
-        IsOccupied = true;
-        
-        // Событие
-        OnTowerBuilt?.Invoke(CurrentTower);
-        
-        Debug.Log($"Построена {towerData.towerName}");
-        return true;
+            if ((IsOccupied || towerData == null) && (towerData.prefab != null)) return false;
+            
+            // Создаем башню
+            GameObject towerGO = Instantiate(towerData.prefab, transform.position, Quaternion.identity);
+            CurrentTower = towerGO.GetComponent<Tower>();
+            
+            if (CurrentTower == null)
+            {
+                Debug.LogError($"Префаб {towerData.prefab.name} не содержит Tower!");
+                Destroy(towerGO);
+                return false;
+            }
+            
+            // Инициализируем с данными
+            CurrentTower.Initialize(towerData, this);
+            IsOccupied = true;
+            
+            // Событие
+            OnTowerBuilt?.Invoke(CurrentTower);
+            
+            Debug.Log($"Построена {towerData.towerName}");
+            return true;
     }
     
     // Улучшение башни (две ветки как в Kingdom Rush)
