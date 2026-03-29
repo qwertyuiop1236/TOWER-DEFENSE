@@ -28,21 +28,16 @@ public class CannonTower : Tower
     {
         if (_currentTarget == null) return;
         
-        // Создаем ядро
-        GameObject cannonball = Instantiate(_cannonballPrefab, _firePoint.position, Quaternion.identity);
+        // Было: GameObject cannonball = Instantiate(_cannonballPrefab, _firePoint.position, Quaternion.identity);
+        GameObject cannonball = ObjectPool.Instance.Get(_cannonballPrefab, _firePoint.position, Quaternion.identity);
         
-        // Рассчитываем траекторию (дуга)
         Vector3 direction = (_currentTarget.transform.position - _firePoint.position).normalized;
-        
-        // Добавляем движение с "дугой"
         Rigidbody2D rb = cannonball.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
             rb.velocity = direction * _projectileSpeed;
-            // Добавляем немного силы вверх для дуги
             rb.AddForce(Vector2.up * 2f, ForceMode2D.Impulse);
         }
-        
         
         ResetAttackTimer();
         Debug.Log($"Пушка стреляет! Основной урон: {_damage}, по площади: {_damage * _splashDamageMultiplier}");

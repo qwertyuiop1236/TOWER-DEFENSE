@@ -158,11 +158,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1924077330800400283}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e9286860a0a12fb6884f8b351a75eb9, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a59d98cccc3f132ba1db0011bd6239e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damageShells: 10
-  _pierceChanceArrow: 0.2
+  _damageShells: 0
+  _pierceChanceArrow: 0
 --- !u!1 &5303306099527690052
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,7 +174,6 @@ GameObject:
   - component: {fileID: 7450618606832916892}
   - component: {fileID: 6426316946213890512}
   - component: {fileID: 2403235635825873501}
-  - component: {fileID: 5173666827454548346}
   m_Layer: 0
   m_Name: Tawers
   m_TagString: Untagged
@@ -262,17 +261,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b5ca76bef7bc9c7f91a4e38da98e7f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds:
-  - {fileID: 8300000, guid: 348fd78d777f7b58bbbf170a30411295, type: 3}
-  - {fileID: 8300000, guid: 38fde082b59a7d7489b55071e39d6a87, type: 3}
-  - {fileID: 8300000, guid: fd0973be4a738b0e78419c9191e45d6e, type: 3}
-  randSound:
-  - suondArray:
-    - {fileID: 8300000, guid: c501c08c40aeafc91b884f1797f835e4, type: 3}
-    - {fileID: 8300000, guid: f18f576ef14849dac9020f87c304a0aa, type: 3}
-    - {fileID: 8300000, guid: 260e6f3ef743b4aeaa912431e10b1bbe, type: 3}
-    - {fileID: 8300000, guid: af8a01fbbab9b4c018e55cf072e22996, type: 3}
-  - suondArray: []
+  sounds: []
+  randSound: []
   _range: 3
   _attackSpeed: 1
   _cost: 100
@@ -286,102 +276,6 @@ MonoBehaviour:
   _firePoint: {fileID: 8111947192819252299}
   _arrowSpeed: 15
   _pierceChance: 0.2
---- !u!82 &5173666827454548346
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5303306099527690052}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &5743581827920323864
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,11 +320,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 5743581827920323864}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e9286860a0a12fb6884f8b351a75eb9, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b5ca76bef7bc9c7f91a4e38da98e7f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damageShells: 0
-  _pierceChanceArrow: 0
+  sounds: []
+  randSound: []
+  _range: 3
+  _attackSpeed: 1
+  _cost: 100
+  _upgradeCost: 50
+  _level: 1
+  _currentVisualModel: {fileID: 0}
+  _visualAnchor: {fileID: 0}
+  _myBuildPad: {fileID: 0}
+  _towerData: {fileID: 0}
+  _arrowPrefab: {fileID: 0}
+  _firePoint: {fileID: 0}
+  _arrowSpeed: 0
+  _pierceChance: 0.2
 --- !u!82 &1342403501247202809
 AudioSource:
   m_ObjectHideFlags: 0

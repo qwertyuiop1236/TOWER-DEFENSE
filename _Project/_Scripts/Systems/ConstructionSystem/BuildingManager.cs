@@ -35,7 +35,6 @@ public class TowerBuildManager : MonoBehaviour
     void HandleBuildMode()
     {
         if (!_isBuildMode && Camera.main == null) return;
-        
         // 2D Raycast
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, 100f, _buildPadLayerMask);
@@ -52,11 +51,11 @@ public class TowerBuildManager : MonoBehaviour
                 _hoveredPad = pad;
                 
                 // Позиционируем призрак
-                if (_currentGhost != null)
+                if (_currentGhost != null && _selectedTower != null)
                 {
                     _currentGhost.transform.position = pad.transform.position;
                     _currentGhost.SetActive(true);
-                    
+
                     // Проверяем возможность строительства
                     bool canBuild = !pad.IsOccupied && 
                                    StatsSystem.Instance.Money >= _selectedTower.baseCost;

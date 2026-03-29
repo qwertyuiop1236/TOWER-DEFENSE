@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public abstract class Enemy : AudioSystem
+public abstract class Enemy : AudioSystem, IPoolable
 {
     // ОБЩИЕ ДЛЯ ВСЕХ ВРАГОВ
     [Header("Общие параметры для всех врагов")]
@@ -21,9 +21,20 @@ public abstract class Enemy : AudioSystem
     public int Cost => _cost;
     public float XP => _xp;
     public float Armor => _armor;
+
+    // Переменные для сброса.
+    private float _initialSpeed;
+    private float _initialXp;
+    private float _initialArmor;
+    private int _initialPoint;
     
     protected virtual void Start()
     {
+        _initialSpeed = _speedMuve;
+        _initialXp = _xp;
+        _initialArmor = _armor;
+        _initialPoint = _point;
+
         if(waypoints != null && waypoints.Length > 1){;
             _maxXp += _xp;
             _maxArmor += _armor;
@@ -82,34 +93,49 @@ public abstract class Enemy : AudioSystem
 
     protected virtual void Death()
     {
-        // Удуление врага 
-        Destroy(gameObject);
-
-        // Враг НЕ знает про UI, только про экономику
+        // Вместо Destroy(gameObject);
+        // Сначала добавляем деньги и очки
         StatsSystem.Instance.AddMoney(_cost);
-        // Повышает количество очков
         StatsSystem.Instance.AddScore(_point);
-        // Увеличение каличества убийств
-
-
-
-        // StatsSystem.Instance.EnemyKilled();
-        // OnDeath?.Invoke(this);
-
         
+        // Возвращаем в пул
+        ObjectPool.Instance.Return(gameObject);
     }
 
     protected virtual void Attack(int Damage)
     {
-        // TODO: Нанести урон игроку
         Debug.Log("Враг достиг конца пути!");
-
-        // Нанесение урона врагом
         StatsSystem.Instance.TakeDamage(Damage);
+        // Вместо Destroy(gameObject);
+        ObjectPool.Instance.Return(gameObject);
+    }
 
-        // Уничтожаем врага
-        Destroy(gameObject);
+    
+    // Метод сброса состояния (вызывается при возврате в пул)
+    public virtual void ResetState()
+    {
+        _speedMuve = _initialSpeed;
+        _xp = _initialXp;
+        _armor = _initialArmor;
+        _point = _initialPoint;
+        _damage = 0; // если нужно
+        currentIndex = 0; // сброс индекса пути
+        // Сброс скорости Rigidbody, если есть
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null) rb.velocity = Vector2.zero;
+        // Сброс аниматора (опционально)
+        Animator anim = GetComponent<Animator>();
+        if (anim != null) anim.Rebind();
+    }
 
-        
+    // Реализация IPoolable
+    public void OnGetFromPool()
+    {
+        // Можно ничего не делать, или выполнить код при доставании
+    }
+
+    public void OnReturnToPool()
+    {
+        ResetState(); // сбрасываем всё перед возвратом
     }
 }

@@ -23,28 +23,18 @@ public class MagicTower : Tower
     {
         if (_currentTarget == null) return;
         
-        // Создаем заклинание
-        GameObject spell = Instantiate(_spellPrefab, _castPoint.position, Quaternion.identity);
+        // Было: GameObject spell = Instantiate(_spellPrefab, _castPoint.position, Quaternion.identity);
+        GameObject spell = ObjectPool.Instance.Get(_spellPrefab, _castPoint.position, Quaternion.identity);
         
-        // Наводим на цель
         Vector3 direction = (_currentTarget.transform.position - _castPoint.position).normalized;
         spell.transform.right = direction;
         
-        // Добавляем движение
         Rigidbody2D rb = spell.GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            rb.velocity = direction * _attackSpeed;
-        }
-
-        // Проигрывание рандомного звука стрельбы для мага
-        PlaySound(0, random: true);
-
-        // Настройка стрелы
-        spell.GetComponent<ProjectileBase>().Initialize(_damage,10,gameObject);
-
-        ResetAttackTimer();
+        if (rb != null) rb.velocity = direction * _attackSpeed;
         
+        PlaySound(0, random: true);
+        spell.GetComponent<ProjectileBase>().Initialize(_damage, 10, gameObject);
+        ResetAttackTimer();
         Debug.Log($"Магия! Урон: {_damage}, Замедление: {_slowEffect:P0}");
     }
 

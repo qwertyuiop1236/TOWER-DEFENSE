@@ -8,7 +8,7 @@ public class AudioSystem : MonoBehaviour
     [SerializeField] private AudioClip[] sounds;
     [SerializeField] private SoundArrays[] randSound;
     private AudioSource audio=> GetComponent<AudioSource>();
-
+    
     public void PlaySound(int index, float volume=1, bool random =false, bool isDestroy=false, float p1=0.85f,float p2=1.2f)
     {
         if(random ? randSound[index].soundArray[Random.Range(0,randSound[index].soundArray.Length)] : sounds[index] != null){

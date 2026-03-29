@@ -74,7 +74,7 @@ public class WaveSpawner : MonoBehaviour
             for (int i = 0; i < enemyWave.count; i++)
             {
                 // Создаем врага
-                Instantiate(enemyWave.enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+                GameObject enemyObj = ObjectPool.Instance.Get(enemyWave.enemyPrefab, spawnPoint.position, spawnPoint.rotation);
                 
                 // Ждем перед следующим врагом
                 if (enemyWave.delayBetweenSpawn > 0)

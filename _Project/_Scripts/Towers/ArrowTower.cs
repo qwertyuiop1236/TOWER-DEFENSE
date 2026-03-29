@@ -34,30 +34,19 @@ public class ArrowTower : Tower
     {
         if (_currentTarget == null) return;
         
-        // Создаем стрелу
-        GameObject arrow = Instantiate(_arrowPrefab, _firePoint.position, Quaternion.identity);
+        // Вместо Instantiate:
+        // GameObject arrow = Instantiate(_arrowPrefab, _firePoint.position, Quaternion.identity);
+        GameObject arrow = ObjectPool.Instance.Get(_arrowPrefab, _firePoint.position, Quaternion.identity);
         
-        // Направляем на врага
         Vector3 direction = (_currentTarget.transform.position - _firePoint.position).normalized;
         arrow.transform.right = direction;
         
-        // Добавляем движение
         Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            rb.velocity = direction * _arrowSpeed;
-        }
+        if (rb != null) rb.velocity = direction * _arrowSpeed;
         
-        // Звук выстрела арбалета
         PlaySound(0, random: true);
-
-
-        // Настройка стрелы
-        arrow.GetComponent<ProjectileBase>().Initialize(_damage,_pierceChance,gameObject);
-        
-        // Сброс таймера
+        arrow.GetComponent<ProjectileBase>().Initialize(_damage, _pierceChance, gameObject);
         ResetAttackTimer();
-        
         Debug.Log($"Арбалет стреляет! Урон: {_damage}");
     }
     

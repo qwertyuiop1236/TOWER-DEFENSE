@@ -52,7 +52,7 @@ void Start()
     // Строительство башни
     public bool BuildTower(TowerData towerData)
     {
-            if ((IsOccupied || towerData == null) && (towerData.prefab != null)) return false;
+            if (IsOccupied || towerData == null || towerData.prefab == null) return false;
             
             // Создаем башню
             GameObject towerGO = Instantiate(towerData.prefab, transform.position, Quaternion.identity);
