@@ -5,7 +5,7 @@ public abstract class ProjectileBase : MonoBehaviour
     [SerializeField] protected float _damageShells;
     [SerializeField] protected float _pierceChanceArrow;
 
-    private GameObject _owner;
+    protected GameObject _owner; 
 
 
     public virtual void Initialize(float damage, float pierceChance, GameObject owner)

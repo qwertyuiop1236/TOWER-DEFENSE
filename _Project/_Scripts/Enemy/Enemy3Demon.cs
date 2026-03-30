@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySkeleton : Enemy
+public class EnemyDemon : Enemy
 {
     [Header("настройка уникальных параметров Tower")]
-    [SerializeField] protected float speedMuveSkeleton;    
-    [SerializeField] protected int damageSkeleton;
-    [SerializeField] protected float xpSkeleton = 400f;
+    [SerializeField] protected float speedMuveDemon;    
+    [SerializeField] protected int damageDemon;
+    [SerializeField] protected float xpDemon = 400f;
     
     protected override void Start()
     {
         base.Start();
 
-        _speedMuve =speedMuveSkeleton;
-        _damage= damageSkeleton;
-        _xp = xpSkeleton;
+        _moveSpeed =speedMuveDemon;
+        _damage= damageDemon;
+        _health = xpDemon;
     }
 
     protected override void Update()
