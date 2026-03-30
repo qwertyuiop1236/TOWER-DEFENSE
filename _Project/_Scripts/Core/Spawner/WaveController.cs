@@ -1,6 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Управляет волнами врагов: подписывается на события смерти врагов и таймера,
+/// отслеживает оставшихся врагов, переключает состояние игры.
+/// </summary>
 public class WaveController : MonoBehaviour
 {
     [Header("Настройки волн")]

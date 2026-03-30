@@ -113,6 +113,10 @@ public abstract class Tower : MonoBehaviour
     // 6. Абстрактные методы (РАЗНЫЕ для каждой башни)
     public abstract void Attack();
     
+
+    /// <summary>
+    /// Ищет цель, используя текущую стратегию (ближайший, самый сильный и т.д.).
+    /// </summary>
     protected virtual void FindTarget()
     {
         if (_targetStrategy != null)

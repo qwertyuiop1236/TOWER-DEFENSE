@@ -3,20 +3,15 @@ using UnityEngine;
 public class EnemyFastZombie : EnemyZombie
 {
     [Header("настройка уникальных параметров FastZombie")]
-    [SerializeField] protected float speedMuveFastZombie = 1.5f;    
-    
+    [SerializeField] protected float speedMuveFastZombie = 1.5f;
+
     protected override void Start()
     {
         base.Start();
-
-        _speedMuve =speedMuveFastZombie;
-        
+        _moveSpeed = speedMuveFastZombie;
     }
 
-    protected override void Update()
-    {
-        base.Update();
-    }
+    protected override void Update() => base.Update();
 
     public override void TakeDamage(float damage)
     {

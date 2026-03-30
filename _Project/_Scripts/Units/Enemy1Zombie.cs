@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,58 +7,43 @@ public class EnemyZombie : Enemy
     [SerializeField] protected bool hasShield = false;
     [SerializeField] protected float shieldDamageMultiplier = 1f;
 
-    [Header("UI элементы для отображения параметров")]
+    [Header("UI элементы")]
     [SerializeField] protected Image BarXP;
     [SerializeField] protected Image BarArmor;
-    
-    // Для управления скоростью
+
     private float originalSpeed;
     private bool isBoosted = false;
-
     private float BarRefreshTimeMax = 0.2f;
     private float BarRefreshTime = 0;
     private bool DamageRegistration = false;
 
-    // Доступные переменыне
-
     public float _Armor => _armor;
-    
+
     protected virtual void Awake()
     {
         BarRefreshTime += BarRefreshTimeMax;
-        originalSpeed = _speedMuve;
-
-        // Проигрывается звук напесения урона
+        originalSpeed = _moveSpeed;
         AudioManager.Instance.PlaySound("zombie_damage", randomPitch: true, position: transform.position);
     }
 
-
-    protected override void Start()
-    {
-        base.Start();
-    }
-
-
+    protected override void Start() => base.Start();
     protected override void Update()
     {
         base.Update();
         UI_Update();
     }
 
-
     protected virtual void UI_Update()
     {
         BarRefreshTime -= Time.deltaTime;
         if (BarRefreshTime <= 0 && DamageRegistration)
         {
-            BarXP.fillAmount = _xp / _maxXp;
+            BarXP.fillAmount = _health / _maxHealth;
             BarArmor.fillAmount = _armor / _maxArmor;
-            
             BarRefreshTime += BarRefreshTimeMax;
             DamageRegistration = false;
         }
     }
-    
 
     public override void TakeDamage(float damage)
     {
@@ -73,18 +57,14 @@ public class EnemyZombie : Enemy
             if (_armor - damage > 0)
             {
                 _armor -= damage;
-
-                // Проигрывание звук удара по броне
                 AudioManager.Instance.PlaySound("zombie_armor_hit", volume: 0.3f, randomPitch: true, position: transform.position);
-                
-                Debug.Log("Урона по бране " + damage);
+                Debug.Log("Урона по броне " + damage);
             }
             else
             {
                 base.TakeDamage(damage - _armor);
-                _armor=0;
+                _armor = 0;
                 Debug.Log("нанесенный урон " + damage);
-                
             }
         }
     }
@@ -92,20 +72,15 @@ public class EnemyZombie : Enemy
     protected override void Death()
     {
         base.Death();
-        
-        // Проигрывание звука смерти
         AudioManager.Instance.PlaySound("zombie_death", randomPitch: true, position: transform.position);
-
     }
-    
-    
-    // Методы для управления скоростью
+
     public void ApplySpeedBoost(float multiplier)
     {
         if (!isBoosted)
         {
             isBoosted = true;
-            _speedMuve = originalSpeed * multiplier;
+            _moveSpeed = originalSpeed * multiplier;
         }
     }
 
@@ -114,12 +89,10 @@ public class EnemyZombie : Enemy
         if (isBoosted)
         {
             isBoosted = false;
-            _speedMuve = originalSpeed;
+            _moveSpeed = originalSpeed;
         }
     }
 
-    
-    // Методы для управления щитом
     public void ApplyShield(float damageReduction, float duration)
     {
         hasShield = true;
@@ -132,16 +105,6 @@ public class EnemyZombie : Enemy
         shieldDamageMultiplier = 1f;
     }
 
-
-    public void AddArmor(float AddArmor)
-    {
-        _armor+=AddArmor;
-    }
-
-
-    public void ArmorZero()
-    {
-        _armor=0;
-    }
-
+    public void AddArmor(float AddArmor) => _armor += AddArmor;
+    public void ArmorZero() => _armor = 0;
 }

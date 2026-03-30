@@ -1,6 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Пул объектов для переиспользования экземпляров (враги, снаряды).
+/// Реализует синглтон и словарь очередей для каждого префаба.
+/// </summary>
 public class ObjectPool : MonoBehaviour
 {
     public static ObjectPool Instance { get; private set; }

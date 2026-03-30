@@ -1,6 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Статический менеджер строительства. Управляет текущим режимом строительства,
+/// историей команд (Undo) и делегирует выполнение команд.
+/// </summary>
 public static class BuildManager
 {
     private static TowerData _selectedTower;

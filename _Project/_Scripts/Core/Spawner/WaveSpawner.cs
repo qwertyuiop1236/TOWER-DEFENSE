@@ -5,7 +5,6 @@ public class WaveSpawner : MonoBehaviour
 {
     public Transform spawnPoint;
 
-    // Спавн волны по данным
     public IEnumerator SpawnWave(WaveData wave)
     {
         if (wave == null || wave.enemies == null || wave.enemies.Length == 0)
@@ -20,8 +19,7 @@ public class WaveSpawner : MonoBehaviour
 
             for (int i = 0; i < enemyWave.count; i++)
             {
-                // Используем пул
-                GameObject enemyObj = EnemyFactory.Create(enemyWave.enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+                EnemyFactory.Create(enemyWave.enemyPrefab, spawnPoint.position, spawnPoint.rotation);
                 yield return new WaitForSeconds(enemyWave.delayBetweenSpawn);
             }
         }

@@ -5,43 +5,39 @@ using UnityEngine;
 public class EnemyNecromancer : Enemy
 {
     [Header("настройка уникальных параметров Tower")]
-    [SerializeField] protected float speedMuveNecromancer;    
+    [SerializeField] protected float speedMuveNecromancer;
     [SerializeField] protected int damageNecromancer;
     [SerializeField] protected float xpNecromancer = 400f;
-    
 
-    [Header("Общие параметры для всех врагов")]
+    [Header("Общие параметры")]
     [SerializeField] protected GameObject Skeleton;
-    [SerializeField] protected float TimeSpavn=0;
-    [SerializeField] protected float TimeSpavnMax=1;
-
+    [SerializeField] protected float TimeSpavn = 0;
+    [SerializeField] protected float TimeSpavnMax = 1;
 
     protected override void Start()
     {
         base.Start();
-
-        _speedMuve =speedMuveNecromancer;
-        _damage= damageNecromancer;
-        _xp = xpNecromancer;
-
-        TimeSpavn=TimeSpavnMax;
+        _moveSpeed = speedMuveNecromancer;
+        _damage = damageNecromancer;
+        _health = xpNecromancer;
+        TimeSpavn = TimeSpavnMax;
     }
 
     protected override void Update()
     {
         base.Update();
-
         TimeSpavn -= Time.deltaTime;
         if (TimeSpavn <= 0)
         {
-            Spavner();
+            Spawner();
             TimeSpavn += TimeSpavnMax;
         }
     }
 
-    protected void Spavner()
+    protected void Spawner()
     {
-        GameObject Skeleton1 = Instantiate(Skeleton,transform.position,Quaternion.identity);
+        // Используем фабрику для создания скелета (вместо Instantiate)
+        EnemyFactory.Create(Skeleton, transform.position, Quaternion.identity);
     }
 
     public override void TakeDamage(float damage)

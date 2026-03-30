@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using UnityEngine;
 
+/// <summary>
+/// Устаревший компонент. Вместо него используйте AudioManager.
+/// </summary>
 public class AudioSystem : MonoBehaviour
 {
     [SerializeField] private AudioClip[] sounds;
