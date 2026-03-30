@@ -21,7 +21,7 @@ public class WaveSpawner : MonoBehaviour
             for (int i = 0; i < enemyWave.count; i++)
             {
                 // Используем пул
-                ObjectPool.Instance.Get(enemyWave.enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+                GameObject enemyObj = EnemyFactory.Create(enemyWave.enemyPrefab, spawnPoint.position, spawnPoint.rotation);
                 yield return new WaitForSeconds(enemyWave.delayBetweenSpawn);
             }
         }

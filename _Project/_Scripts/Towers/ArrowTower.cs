@@ -36,8 +36,8 @@ public class ArrowTower : Tower
         
         // Вместо Instantiate:
         // GameObject arrow = Instantiate(_arrowPrefab, _firePoint.position, Quaternion.identity);
-        GameObject arrow = ObjectPool.Instance.Get(_arrowPrefab, _firePoint.position, Quaternion.identity);
-        
+        GameObject arrow = ProjectileFactory.Create(_arrowPrefab, _firePoint.position, Quaternion.identity);
+    
         Vector3 direction = (_currentTarget.transform.position - _firePoint.position).normalized;
         arrow.transform.right = direction;
         

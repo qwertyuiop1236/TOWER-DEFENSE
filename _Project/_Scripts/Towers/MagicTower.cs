@@ -24,9 +24,8 @@ public class MagicTower : Tower
     {
         if (_currentTarget == null) return;
         
-        // Было: GameObject spell = Instantiate(_spellPrefab, _castPoint.position, Quaternion.identity);
-        GameObject spell = ObjectPool.Instance.Get(_spellPrefab, _castPoint.position, Quaternion.identity);
-        
+        GameObject spell = ProjectileFactory.Create(_spellPrefab, _castPoint.position, Quaternion.identity);
+    
         Vector3 direction = (_currentTarget.transform.position - _castPoint.position).normalized;
         spell.transform.right = direction;
         
@@ -34,7 +33,6 @@ public class MagicTower : Tower
         if (rb != null) rb.velocity = direction * _attackSpeed;
         
         AudioManager.Instance.PlaySound("magic_shoot", randomPitch: true);
-
         spell.GetComponent<ProjectileBase>().Initialize(_damage, 10, gameObject);
         ResetAttackTimer();
         Debug.Log($"Магия! Урон: {_damage}, Замедление: {_slowEffect:P0}");
