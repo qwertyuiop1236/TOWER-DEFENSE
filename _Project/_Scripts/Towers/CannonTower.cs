@@ -49,32 +49,18 @@ public class CannonTower : Tower
     
     protected override void FindTarget()
     {
-        // Пушка выбирает самого здорового врага (танка)
-        Enemy strongestEnemy = null;
-        //float maxHealth = 0f;
-        
-        Enemy[] allEnemies = FindObjectsOfType<Enemy>();
-        
-        foreach (Enemy enemy in allEnemies)
+        Enemy strongest = null;
+        float maxHealth = 0f;
+        foreach (var enemy in enemiesInRange)
         {
-            if (!IsInRange(enemy.transform.position)) continue;
-            
-            // Предполагаем что у Enemy есть свойство Health
-            // float enemyHealth = enemy.GetHealth();
-            // if (enemyHealth > maxHealth)
-            // {
-            //     maxHealth = enemyHealth;
-            //     strongestEnemy = enemy;
-            // }
-            
-            // Временная логика: берем первого врага
-            if (strongestEnemy == null)
+            if (enemy == null) continue;
+            if (enemy.Health > maxHealth)
             {
-                strongestEnemy = enemy;
+                maxHealth = enemy.Health;
+                strongest = enemy;
             }
         }
-        
-        _currentTarget = strongestEnemy;
+        _currentTarget = strongest;
     }
     
     public override bool Upgrade()

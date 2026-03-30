@@ -19,7 +19,7 @@ public abstract class Enemy : MonoBehaviour, IPoolable
     private int currentIndex = 0;  // Текущая точка
 
     public int Cost => _cost;
-    public float XP => _xp;
+    public float Health => _xp;
     public float Armor => _armor;
 
     // Переменные для сброса.
@@ -137,5 +137,15 @@ public abstract class Enemy : MonoBehaviour, IPoolable
     public void OnReturnToPool()
     {
         ResetState(); // сбрасываем всё перед возвратом
+    }
+
+    protected virtual void OnEnable()
+    {
+        EnemyRegistry.Register(this);
+    }
+
+    protected virtual void OnDisable()
+    {
+        EnemyRegistry.Unregister(this);
     }
 }

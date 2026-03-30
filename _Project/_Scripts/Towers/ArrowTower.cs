@@ -50,39 +50,23 @@ public class ArrowTower : Tower
         Debug.Log($"Арбалет стреляет! Урон: {_damage}");
     }
     
-// 4. Реализуем ОБЯЗАТЕЛЬНЫЙ метод FindTarget
-private float _searchTimer;
-private const float SEARCH_INTERVAL = 0.5f; // Искать раз в полсекунды
-
-protected override void FindTarget()
-{
-    // Ищем самого ближайшего врага в радиусе
-    Enemy closestEnemy = null;
-    float closestDistance = float.MaxValue; // Начинаем с максимального значения
-
-    _searchTimer += Time.deltaTime;
-    if (_searchTimer < SEARCH_INTERVAL) return;
-    _searchTimer = 0f;
-    
-    // Получаем всех врагов
-    Enemy[] allEnemies = FindObjectsOfType<Enemy>();
-    
-    foreach (Enemy enemy in allEnemies)
+    // 4. Реализуем ОБЯЗАТЕЛЬНЫЙ метод FindTarget
+    protected override void FindTarget()
     {
-        if (!IsInRange(enemy.transform.position)) continue;
-        
-        float distance = Vector3.Distance(transform.position, enemy.transform.position);
-        
-        // Ищем минимальное расстояние (ближайший враг)
-        if (distance < closestDistance)
+        Enemy closest = null;
+        float minDist = float.MaxValue;
+        foreach (var enemy in enemiesInRange)
         {
-            closestDistance = distance;
-            closestEnemy = enemy;
+            if (enemy == null) continue;
+            float dist = Vector3.Distance(transform.position, enemy.transform.position);
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = enemy;
+            }
         }
+        _currentTarget = closest;
     }
-    
-    _currentTarget = closestEnemy;
-}
     
     // 5. Переопределяем Upgrade для уникальных улучшений
     public override bool Upgrade()

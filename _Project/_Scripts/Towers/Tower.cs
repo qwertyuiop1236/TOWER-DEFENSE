@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public abstract class Tower : MonoBehaviour
 {
@@ -30,6 +31,11 @@ public abstract class Tower : MonoBehaviour
     public float TowerRange => _range;
     public BuildPad MyBuildPad => _myBuildPad;
     public TowerData TowerData => _towerData;
+
+
+    protected List<Enemy> enemiesInRange = new List<Enemy>();
+    private float _rangeCacheTimer;
+    private const float RANGE_CACHE_INTERVAL = 0.2f; // обновлять раз в 0.2 секунды    
     
     // 4. Виртуальный Start
     protected virtual void Start()
@@ -53,19 +59,29 @@ public abstract class Tower : MonoBehaviour
     protected virtual void Update()
     {
         if (!_canAttack) return;
-        
-        // Обновляем таймер
+
+        // Обновляем таймер атаки
         if (_attackTimer > 0)
             _attackTimer -= Time.deltaTime;
 
-        // Ищем цель если нет текущей или цель невалидна
+        // Обновляем кэш врагов в радиусе с интервалом
+        if (_rangeCacheTimer <= 0f)
+        {
+            UpdateEnemiesInRange();
+            _rangeCacheTimer = RANGE_CACHE_INTERVAL;
+        }
+        else
+        {
+            _rangeCacheTimer -= Time.deltaTime;
+        }
+
+        // Если нет цели или цель невалидна – ищем новую
         if (_currentTarget == null || !IsTargetValid(_currentTarget))
         {
             FindTarget();
         }
-        
 
-        // Атакуем если есть цель и готовы
+        // Атакуем, если есть цель и таймер готов
         if (CanAttack && _currentTarget != null)
         {
             Attack();
@@ -398,5 +414,17 @@ public abstract class Tower : MonoBehaviour
             Gizmos.DrawLine(transform.position, _currentTarget.transform.position);
         }
         
+    }
+
+    protected void UpdateEnemiesInRange()
+    {
+        enemiesInRange.Clear();
+        foreach (var enemy in EnemyRegistry.AllEnemies)
+        {
+            if (enemy != null && IsInRange(enemy.transform.position))
+            {
+                enemiesInRange.Add(enemy);
+            }
+        }
     }
 }

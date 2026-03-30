@@ -266,7 +266,6 @@ GameObject:
   - component: {fileID: 1889144867798833642}
   - component: {fileID: 3769661041209039671}
   - component: {fileID: -6947343773223970253}
-  - component: {fileID: -5417859136217537322}
   m_Layer: 0
   m_Name: 3ZombieCavaleria
   m_TagString: Untagged
@@ -389,29 +388,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 280e3225afdad09b09610bd2615fd68f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds:
-  - {fileID: 8300000, guid: 433d4fb9e037b5b39b966eab286ba4ea, type: 3}
-  randSound:
-  - suondArray:
-    - {fileID: 8300000, guid: 391b4d44cbf89f39ea08daf4c3cce786, type: 3}
-    - {fileID: 8300000, guid: 980b7c9826a4c16dfb80795fd55261b6, type: 3}
-    - {fileID: 8300000, guid: e4391efda8d9a9be6b0a706a6a541ec7, type: 3}
-    - {fileID: 8300000, guid: 792d94fa93c70009f9e7b9b0f76c12d7, type: 3}
-  - suondArray:
-    - {fileID: 8300000, guid: c506281df7f7424c9bafe9e4cd548f1a, type: 3}
-    - {fileID: 8300000, guid: f315ab360b502848ba8647d3cfc11ce5, type: 3}
-  - suondArray:
-    - {fileID: 8300000, guid: a735e7048d23b6ef6a61046817e6efe2, type: 3}
-    - {fileID: 8300000, guid: 75d09ac98e113fb3693c68db1ffb6d06, type: 3}
-    - {fileID: 8300000, guid: 905c1c4b82efe171ea71d0c992a11f94, type: 3}
-  - suondArray:
-    - {fileID: 8300000, guid: bc70cb26b9f2e7f76be729f6044446fe, type: 3}
-    - {fileID: 8300000, guid: dfed5da282dccf556a3f194edca7d435, type: 3}
   _speedMuve: 1
   _cost: 75
   _maxXp: 0
   _xp: 300
-  _maxAromor: 0
+  _maxArmor: 0
   _armor: 0
   _point: 250
   hasShield: 0
@@ -422,102 +403,6 @@ MonoBehaviour:
   speedMuveHorse: 3
   xpFastZombie: 200
   xpHorse: 200
---- !u!82 &-5417859136217537322
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4724628329373440019}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &5839960237104554741
 GameObject:
   m_ObjectHideFlags: 0
