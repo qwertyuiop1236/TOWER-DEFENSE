@@ -91,16 +91,16 @@ public class TowerUpgradeUI : MonoBehaviour
     {
         if (_selectedPad != null)
         {
-            _selectedPad.UpgradeTower(pathIndex);
+            BuildManager.UpgradeTower(_selectedPad, pathIndex);
             UpdateUIInfo(); // Обновляем UI после улучшения
         }
     }
-    
+
     void SellTower()
     {
         if (_selectedPad != null)
         {
-            _selectedPad.SellTower();
+            BuildManager.SellTower(_selectedPad);
             HideUI();
         }
     }

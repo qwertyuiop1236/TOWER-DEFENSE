@@ -40,23 +40,6 @@ public class MagicTower : Tower
         Debug.Log($"Магия! Урон: {_damage}, Замедление: {_slowEffect:P0}");
     }
 
-    
-    protected override void FindTarget()
-    {
-        Enemy closest = null;
-        float minDist = float.MaxValue;
-        foreach (var enemy in enemiesInRange)
-        {
-            if (enemy == null) continue;
-            float dist = Vector3.Distance(transform.position, enemy.transform.position);
-            if (dist < minDist)
-            {
-                minDist = dist;
-                closest = enemy;
-            }
-        }
-        _currentTarget = closest;
-    }
 
     public override bool Upgrade()
     {

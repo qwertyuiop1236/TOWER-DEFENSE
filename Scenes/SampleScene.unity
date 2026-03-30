@@ -454,9 +454,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73543dba2f52b8c55b8ead927c05ca5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buildPadLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!4 &230339958
 Transform:
   m_ObjectHideFlags: 0
@@ -1192,7 +1189,6 @@ MonoBehaviour:
     towerData: {fileID: 11400000, guid: 40f4f0b4a5babb1d9b46c16a5009f9f7, type: 2}
     icon: {fileID: 585429158}
     costText: {fileID: 501453014}
-  _buildManager: {fileID: 230339957}
 --- !u!1001 &695420450
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1424,6 +1420,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 975726187}
   m_CullTransparentMesh: 1
+--- !u!1 &1041971952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1041971954}
+  - component: {fileID: 1041971953}
+  m_Layer: 0
+  m_Name: BuildInputHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1041971953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041971952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e608b5dc9a024f032a06f0f436813eb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buildPadLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _undoKey: 122
+--- !u!4 &1041971954
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041971952}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.3453388, y: 2.2457368, z: -0.11525718}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1123704333
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2077,6 +2121,7 @@ GameObject:
   - component: {fileID: 1857446233}
   - component: {fileID: 1857446232}
   - component: {fileID: 1857446234}
+  - component: {fileID: 1857446235}
   m_Layer: 0
   m_Name: Systems
   m_TagString: Untagged
@@ -2099,7 +2144,7 @@ MonoBehaviour:
   _moneyText: {fileID: 1735944081}
   _scoreText: {fileID: 1641152255}
   _healthText: {fileID: 350527604}
-  _timeBeforeWaveText: {fileID: 0}
+  _timeBeforeWaveText: {fileID: 975726189}
   _moneyFormat: $ {0}
   _scoreFormat: 'Score: {0}'
   _healthFormat: 'HP: {0}'
@@ -2133,7 +2178,19 @@ MonoBehaviour:
   _startMoney: 100
   _startHealth: 20
   _startScore: 0
-  _startTimeBeforeWave: 180
+--- !u!114 &1857446235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857446231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8042a36d25614ede9198e778ab226eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startTime: 5
 --- !u!1 &2069158698
 GameObject:
   m_ObjectHideFlags: 0
@@ -2380,6 +2437,10 @@ PrefabInstance:
       value: Spavner
       objectReference: {fileID: 0}
     - target: {fileID: 3380217852924382795, guid: 2d58732daea4556488dbcb5f23695879, type: 3}
+      propertyPath: spawnPoint
+      value: 
+      objectReference: {fileID: 34236258}
+    - target: {fileID: 3380217852924382795, guid: 2d58732daea4556488dbcb5f23695879, type: 3}
       propertyPath: waves.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -2394,7 +2455,7 @@ PrefabInstance:
     - target: {fileID: 3380217852924382795, guid: 2d58732daea4556488dbcb5f23695879, type: 3}
       propertyPath: waves.Array.data[0].enemies.Array.data[0].enemyPrefab
       value: 
-      objectReference: {fileID: 2787540072896231406, guid: 44a058c947f6887e19a6ba2168374b24, type: 3}
+      objectReference: {fileID: 5109456743138481474, guid: 52d2cfc899e4e74afa29d808c6bbf5c4, type: 3}
     - target: {fileID: 3380217852924382795, guid: 2d58732daea4556488dbcb5f23695879, type: 3}
       propertyPath: waves.Array.data[0].enemies.Array.data[0].delayBetweenSpawn
       value: 2
@@ -2457,5 +2518,6 @@ SceneRoots:
   - {fileID: 857135921}
   - {fileID: 1816733971}
   - {fileID: 364537595}
+  - {fileID: 1041971954}
   - {fileID: 1254962345}
   - {fileID: 189966351}

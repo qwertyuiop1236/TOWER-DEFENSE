@@ -7,29 +7,38 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _moneyText;
     [SerializeField] private TMP_Text _scoreText;
     [SerializeField] private TMP_Text _healthText;
-    [SerializeField] private TMP_Text _timeBeforeWaveText;
+    [SerializeField] private TMP_Text _timeBeforeWaveText;  // теперь будет отображать таймер WaveTimer
     
     [Header("Форматирование")]
     [SerializeField] private string _moneyFormat = "$ {0}";
     [SerializeField] private string _scoreFormat = "Score: {0}";
     [SerializeField] private string _healthFormat = "HP: {0}";
     
-// В методе Start подписка на исправленное событие
-void Start()
-{
-    // ПОДПИСКА на события
-    if (StatsSystem.Instance != null)
+    void Start()
     {
-        StatsSystem.Instance.OnMoneyChanged += UpdateMoneyUI;
-        StatsSystem.Instance.OnScoreChanged += UpdateScoreUI;
-        StatsSystem.Instance.OnHealthChanged += UpdateHealthUI;
-        StatsSystem.Instance.OnTimeBeforeWaveChanged += UpdateTimeUI; // Исправлено имя события
+        // Подписка на события StatsSystem
+        if (StatsSystem.Instance != null)
+        {
+            StatsSystem.Instance.OnMoneyChanged += UpdateMoneyUI;
+            StatsSystem.Instance.OnScoreChanged += UpdateScoreUI;
+            StatsSystem.Instance.OnHealthChanged += UpdateHealthUI;
+        }
+        
+        // Подписка на события WaveTimer
+        if (WaveTimer.Instance != null)
+        {
+            WaveTimer.Instance.OnTimeChanged += UpdateTimeUI;
+            // Инициализируем отображение таймера текущим значением
+            UpdateTimeUI(WaveTimer.Instance.CurrentTime);
+        }
+        else
+        {
+            Debug.LogWarning("WaveTimer.Instance не найден! Таймер не будет отображаться.");
+        }
+        
+        // Обновляем начальные значения ресурсов
+        UpdateAllUI();
     }
-    
-    // Обновляем начальные значения
-    UpdateAllUI();
-}
-
     
     void UpdateAllUI()
     {
@@ -44,23 +53,35 @@ void Start()
     void UpdateScoreUI(int score) => _scoreText.text = string.Format(_scoreFormat, score);
     void UpdateHealthUI(int health) => _healthText.text = string.Format(_healthFormat, health);
     
-    // Для таймера (если нужен)
+    // Метод для обновления отображения таймера (вызывается из WaveTimer)
     public void UpdateTimeUI(float seconds)
     {
+        // Если время <= 0, можно показывать "0:00" или "Wave!"
+        if (seconds <= 0f)
+        {
+            _timeBeforeWaveText.text = "Wave!";
+            return;
+        }
+        
         int minutes = Mathf.FloorToInt(seconds / 60);
         int secs = Mathf.FloorToInt(seconds % 60);
         _timeBeforeWaveText.text = $"{minutes:00}:{secs:00}";
     }
     
-    // В методе OnDestroy отписка
     void OnDestroy()
     {
+        // Отписка от StatsSystem
         if (StatsSystem.Instance != null)
         {
             StatsSystem.Instance.OnMoneyChanged -= UpdateMoneyUI;
             StatsSystem.Instance.OnScoreChanged -= UpdateScoreUI;
             StatsSystem.Instance.OnHealthChanged -= UpdateHealthUI;
-            StatsSystem.Instance.OnTimeBeforeWaveChanged -= UpdateTimeUI; // Исправлено имя события
+        }
+        
+        // Отписка от WaveTimer
+        if (WaveTimer.Instance != null)
+        {
+            WaveTimer.Instance.OnTimeChanged -= UpdateTimeUI;
         }
     }
 }

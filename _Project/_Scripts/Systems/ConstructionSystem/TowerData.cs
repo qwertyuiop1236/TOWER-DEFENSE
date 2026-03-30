@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum TargetStrategyType
+{
+    Nearest,
+    Strongest,
+    // AirPriority // можно добавить позже
+}
+
+
 [CreateAssetMenu(fileName = "NewTower", menuName = "Kingdom Rush/Tower Data")]
 public class TowerData : ScriptableObject
 {
@@ -24,6 +33,9 @@ public class TowerData : ScriptableObject
 
     [Header("UI настройки")]
     public Sprite icon;
+
+    [Header("Стратегия поиска цели")]
+    public TargetStrategyType targetStrategy = TargetStrategyType.Nearest;
     
     [System.Serializable]
     public class UpgradeBranch

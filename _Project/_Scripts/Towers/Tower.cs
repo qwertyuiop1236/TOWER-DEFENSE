@@ -32,6 +32,7 @@ public abstract class Tower : MonoBehaviour
     public BuildPad MyBuildPad => _myBuildPad;
     public TowerData TowerData => _towerData;
 
+    protected ITargetStrategy _targetStrategy;
 
     protected List<Enemy> enemiesInRange = new List<Enemy>();
     private float _rangeCacheTimer;
@@ -40,6 +41,27 @@ public abstract class Tower : MonoBehaviour
     // 4. Виртуальный Start
     protected virtual void Start()
     {
+        // Инициализация стратегии
+        if (_towerData != null)
+        {
+            switch (_towerData.targetStrategy)
+            {
+                case TargetStrategyType.Nearest:
+                    _targetStrategy = new NearestTargetStrategy();
+                    break;
+                case TargetStrategyType.Strongest:
+                    _targetStrategy = new StrongestTargetStrategy();
+                    break;
+                default:
+                    _targetStrategy = new NearestTargetStrategy();
+                    break;
+            }
+        }
+        else
+        {
+            _targetStrategy = new NearestTargetStrategy(); // по умолчанию
+        }
+
         // Если есть TowerData - используем его значения
         if (_towerData != null)
         {
@@ -90,7 +112,14 @@ public abstract class Tower : MonoBehaviour
     
     // 6. Абстрактные методы (РАЗНЫЕ для каждой башни)
     public abstract void Attack();
-    protected abstract void FindTarget();
+    
+    protected virtual void FindTarget()
+    {
+        if (_targetStrategy != null)
+            _currentTarget = _targetStrategy.GetTarget(enemiesInRange, transform.position);
+        else
+            _currentTarget = null;
+    }
     
     // 7. Виртуальные методы улучшения (комбинируем старый и новый подход)
     public virtual bool Upgrade()

@@ -47,21 +47,7 @@ public class CannonTower : Tower
         Debug.Log($"Пушка стреляет! Основной урон: {_damage}, по площади: {_damage * _splashDamageMultiplier}");
     }
     
-    protected override void FindTarget()
-    {
-        Enemy strongest = null;
-        float maxHealth = 0f;
-        foreach (var enemy in enemiesInRange)
-        {
-            if (enemy == null) continue;
-            if (enemy.Health > maxHealth)
-            {
-                maxHealth = enemy.Health;
-                strongest = enemy;
-            }
-        }
-        _currentTarget = strongest;
-    }
+
     
     public override bool Upgrade()
     {

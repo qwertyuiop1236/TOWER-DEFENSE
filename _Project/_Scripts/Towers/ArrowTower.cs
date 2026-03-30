@@ -50,24 +50,6 @@ public class ArrowTower : Tower
         Debug.Log($"Арбалет стреляет! Урон: {_damage}");
     }
     
-    // 4. Реализуем ОБЯЗАТЕЛЬНЫЙ метод FindTarget
-    protected override void FindTarget()
-    {
-        Enemy closest = null;
-        float minDist = float.MaxValue;
-        foreach (var enemy in enemiesInRange)
-        {
-            if (enemy == null) continue;
-            float dist = Vector3.Distance(transform.position, enemy.transform.position);
-            if (dist < minDist)
-            {
-                minDist = dist;
-                closest = enemy;
-            }
-        }
-        _currentTarget = closest;
-    }
-    
     // 5. Переопределяем Upgrade для уникальных улучшений
     public override bool Upgrade()
     {
