@@ -23,7 +23,7 @@ public class ArrowTower : Tower
         base.Start(); // Важно: вызываем родительский!
         
         // Проигрывание звука стройки
-        PlaySound(0, volume : 0.5f);
+        AudioManager.Instance.PlaySound("tower_build", volume: 0.5f);
 
 
         Debug.Log("Арбалетная башня построена!");
@@ -44,7 +44,7 @@ public class ArrowTower : Tower
         Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
         if (rb != null) rb.velocity = direction * _arrowSpeed;
         
-        PlaySound(0, random: true);
+        AudioManager.Instance.PlaySound("arrow_shoot", randomPitch: true);
         arrow.GetComponent<ProjectileBase>().Initialize(_damage, _pierceChance, gameObject);
         ResetAttackTimer();
         Debug.Log($"Арбалет стреляет! Урон: {_damage}");
@@ -99,7 +99,7 @@ protected override void FindTarget()
         }
 
         // Проигрывание звука улучшения
-        PlaySound(1);
+        AudioManager.Instance.PlaySound("tower_upgrade");
         
         return success;
     }

@@ -18,7 +18,7 @@ public class EnemyZombieCavaleria : EnemyZombie
         _speedMuve =speedMuveHorse;
 
         // Проигрывание звука появления лошадей
-        PlaySound(0);
+        AudioManager.Instance.PlaySound("horse_spawn");
     }
 
     protected override void Update()
@@ -38,7 +38,7 @@ public class EnemyZombieCavaleria : EnemyZombie
             if (xpHorse >= 0)
             {
                 // Проигрывание звука смерти лошади
-                PlaySound(3, random : true);
+                AudioManager.Instance.PlaySound("aura_activate", volume: 0.5f, randomPitch: true, position: transform.position);
             }
             
             xpHorse=-1;

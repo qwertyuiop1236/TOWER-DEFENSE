@@ -14,7 +14,8 @@ public class MagicTower : Tower
         base.Start();
         
         // Проигрывание звука стройки
-        PlaySound(0);
+
+        AudioManager.Instance.PlaySound("tower_build");
 
         Debug.Log("Магическая башня построена!");
     }
@@ -32,7 +33,8 @@ public class MagicTower : Tower
         Rigidbody2D rb = spell.GetComponent<Rigidbody2D>();
         if (rb != null) rb.velocity = direction * _attackSpeed;
         
-        PlaySound(0, random: true);
+        AudioManager.Instance.PlaySound("magic_shoot", randomPitch: true);
+
         spell.GetComponent<ProjectileBase>().Initialize(_damage, 10, gameObject);
         ResetAttackTimer();
         Debug.Log($"Магия! Урон: {_damage}, Замедление: {_slowEffect:P0}");
@@ -85,7 +87,7 @@ protected override void FindTarget()
             if (_level >= 3) _maxChainTargets = 5;
             
             // Проигрывание звука улучшения
-            PlaySound(1);
+            AudioManager.Instance.PlaySound("tower_upgrade");
 
             Debug.Log($"Маг улучшен! Цепная молния: {_canChain}, целей: {_maxChainTargets}");
         }

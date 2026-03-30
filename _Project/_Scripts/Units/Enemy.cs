@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public abstract class Enemy : AudioSystem, IPoolable
+public abstract class Enemy : MonoBehaviour, IPoolable
 {
     // ОБЩИЕ ДЛЯ ВСЕХ ВРАГОВ
     [Header("Общие параметры для всех врагов")]

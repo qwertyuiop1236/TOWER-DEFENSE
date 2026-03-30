@@ -21,6 +21,7 @@ public class CannonTower : Tower
         _cost = 200;
         _damage = 30f * _level; // Очень высокий урон
         
+        AudioManager.Instance.PlaySound("tower_build", volume: 0.5f);
         Debug.Log("Пушечная башня построена!");
     }
     
@@ -38,6 +39,9 @@ public class CannonTower : Tower
             rb.velocity = direction * _projectileSpeed;
             rb.AddForce(Vector2.up * 2f, ForceMode2D.Impulse);
         }
+        
+        // Воспроизведение звука выстрела
+        AudioManager.Instance.PlaySound("arrow_shoot", randomPitch: true);
         
         ResetAttackTimer();
         Debug.Log($"Пушка стреляет! Основной урон: {_damage}, по площади: {_damage * _splashDamageMultiplier}");

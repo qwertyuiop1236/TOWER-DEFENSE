@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Tower : AudioSystem
+public abstract class Tower : MonoBehaviour
 {
     // 1. ОБЩИЕ ДЛЯ ВСЕХ БАШЕН
     [SerializeField] protected float _range = 3;

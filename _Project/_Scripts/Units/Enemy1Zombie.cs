@@ -30,7 +30,7 @@ public class EnemyZombie : Enemy
         originalSpeed = _speedMuve;
 
         // Проигрывается звук напесения урона
-        PlaySound(1, random: true, isDestroy :true);
+        AudioManager.Instance.PlaySound("zombie_damage", randomPitch: true, position: transform.position);
     }
 
 
@@ -73,8 +73,10 @@ public class EnemyZombie : Enemy
             if (_armor - damage > 0)
             {
                 _armor -= damage;
+
                 // Проигрывание звук удара по броне
-                PlaySound(2,volume: 0.3f, random: true);
+                AudioManager.Instance.PlaySound("zombie_armor_hit", volume: 0.3f, randomPitch: true, position: transform.position);
+                
                 Debug.Log("Урона по бране " + damage);
             }
             else
@@ -92,7 +94,8 @@ public class EnemyZombie : Enemy
         base.Death();
         
         // Проигрывание звука смерти
-        PlaySound(0, random: true, isDestroy :true);
+        AudioManager.Instance.PlaySound("zombie_death", randomPitch: true, position: transform.position);
+
     }
     
     
