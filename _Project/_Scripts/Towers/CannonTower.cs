@@ -15,12 +15,6 @@ public class CannonTower : Tower
     {
         base.Start();
         
-        // Настройки пушки
-        _range = 3f; // Средняя дистанция
-        _attackSpeed = 0.4f; // Медленная, но мощная
-        _cost = 200;
-        _damage = 30f * _level; // Очень высокий урон
-        
         AudioManager.Instance.PlaySound("tower_build", volume: 0.5f);
         Debug.Log("Пушечная башня построена!");
     }

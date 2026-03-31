@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -21,6 +22,8 @@ public abstract class Enemy : MonoBehaviour, IPoolable
 
     public static event System.Action<Enemy> OnDeath;
 
+    public static event Action<Enemy> OnReachEnd;
+
     public int Cost => _cost;
     public float Health => _health;
     public float Armor => _armor;
@@ -37,17 +40,18 @@ public abstract class Enemy : MonoBehaviour, IPoolable
         _initialArmor = _armor;
         _initialScore = _scoreValue;
 
-        if (waypoints != null && waypoints.Length > 1)
+        // Получаем waypoints из PathManager
+        waypoints = PathManager.Instance.waypoints;
+        if (waypoints == null || waypoints.Length == 0)
         {
-            _maxHealth += _health;
-            _maxArmor += _armor;
-            waypoints = PathManager.Instance.waypoints;
-            if (waypoints == null || waypoints.Length == 0)
-            {
-                Debug.LogError("Нет точек пути! Добавьте Waypoints в PathManager.");
-            }
+            Debug.LogError("Нет точек пути! Добавьте Waypoints в PathManager.");
+            return;
         }
+
+        _maxHealth = _health;
+        _maxArmor = _armor;
     }
+    
 
     protected virtual void Update()
     {
@@ -98,8 +102,11 @@ public abstract class Enemy : MonoBehaviour, IPoolable
     {
         Debug.Log("Враг достиг конца пути!");
         StatsSystem.Instance.TakeDamage(Damage);
+        OnReachEnd?.Invoke(this);  // уведомить WaveController
         ObjectPool.Instance.Return(gameObject);
     }
+
+    
 
     /// <summary>
     /// Сбрасывает состояние врага перед возвратом в пул.

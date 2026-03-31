@@ -27,6 +27,11 @@ public class TowerUpgradeUI : MonoBehaviour
         _upgradePathAButton.onClick.AddListener(() => UpgradeTower(0));
         _upgradePathBButton.onClick.AddListener(() => UpgradeTower(1));
         _sellButton.onClick.AddListener(SellTower);
+
+        foreach (var pad in FindObjectsOfType<BuildPad>())
+        {
+            pad.OnTowerSelected.AddListener(tower => ShowForTower(tower, pad));
+        }
     }
     
     // Показать UI для башни

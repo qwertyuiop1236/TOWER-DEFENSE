@@ -452,12 +452,12 @@ public abstract class Tower : MonoBehaviour
     protected void UpdateEnemiesInRange()
     {
         enemiesInRange.Clear();
-        foreach (var enemy in EnemyRegistry.AllEnemies)
+        var allEnemies = EnemyRegistry.AllEnemies;
+        for (int i = 0; i < allEnemies.Count; i++)
         {
+            var enemy = allEnemies[i];
             if (enemy != null && IsInRange(enemy.transform.position))
-            {
                 enemiesInRange.Add(enemy);
-            }
         }
     }
 }

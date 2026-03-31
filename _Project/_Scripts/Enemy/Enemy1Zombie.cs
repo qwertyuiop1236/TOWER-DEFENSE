@@ -26,7 +26,13 @@ public class EnemyZombie : Enemy
         AudioManager.Instance.PlaySound("zombie_damage", randomPitch: true, position: transform.position);
     }
 
-    protected override void Start() => base.Start();
+    protected override void Start()
+    {
+        base.Start();
+        _maxHealth = _health;
+        _maxArmor = _armor;
+    }
+
     protected override void Update()
     {
         base.Update();
