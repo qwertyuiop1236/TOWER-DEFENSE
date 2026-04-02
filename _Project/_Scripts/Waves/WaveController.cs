@@ -18,6 +18,10 @@ public class WaveController : MonoBehaviour
     private int _currentWaveIndex;
     private int _enemiesRemaining;      // количество врагов в текущей волне, которые ещё не убиты
 
+    // События для LevelController
+    public event System.Action OnAllWavesComplete;
+    public event System.Action OnBaseDestroyed;
+
     public static WaveController Instance { get; private set; }
 
     void Awake()
@@ -39,6 +43,10 @@ public class WaveController : MonoBehaviour
         if (_waveTimer != null)
             _waveTimer.OnTimeEnd += OnTimerEnd;
 
+        // Подписка на разрушение базы
+        if (StatsSystem.Instance != null)
+            StatsSystem.Instance.OnHealthDepleted += OnBaseHealthDepleted;
+
         // Начинаем с предволнового состояния
         GameManager.Instance.SetState(GameState.PreWave);
         // Запускаем таймер перед первой волной
@@ -52,6 +60,8 @@ public class WaveController : MonoBehaviour
             GameManager.Instance.OnStateChanged -= OnGameStateChanged;
         if (_waveTimer != null)
             _waveTimer.OnTimeEnd -= OnTimerEnd;
+        if (StatsSystem.Instance != null)
+            StatsSystem.Instance.OnHealthDepleted -= OnBaseHealthDepleted;
     }
 
     private void OnGameStateChanged(GameState newState)
@@ -67,20 +77,20 @@ public class WaveController : MonoBehaviour
         _enemiesRemaining--;
         Debug.Log($"Enemy died, remaining: {_enemiesRemaining}");
 
-        if (_enemiesRemaining <= 0)
+        // Если все враги волны убиты и больше нет волн
+        if (_enemiesRemaining <= 0 && _currentWaveIndex >= waves.Length)
         {
             // Волна завершена
             GameManager.Instance.SetState(GameState.WaveComplete);
-            // Запускаем таймер до следующей волны
-            if (_currentWaveIndex < waves.Length - 1)
-            {
-                _waveTimer.StartTimer(waves[_currentWaveIndex].delayAfterWave);
-            }
-            else
-            {
-                Debug.Log("Все волны пройдены! Победа!");
-                GameManager.Instance.SetState(GameState.GameOver);
-            }
+            OnAllWavesComplete?.Invoke();
+        }
+    }
+
+    private void OnBaseHealthDepleted(int health)
+    {
+        if (health <= 0)
+        {
+            OnBaseDestroyed?.Invoke();
         }
     }
 
@@ -114,7 +124,7 @@ public class WaveController : MonoBehaviour
         _currentWaveIndex++;
     }
 
-    // Метод для пропуска волны (кнопка "Skip")
+    /// <summary>Пропуск волны (кнопка "Skip")</summary>
     public void SkipWave()
     {
         if (GameManager.Instance.CurrentState == GameState.PreWave)
@@ -125,15 +135,16 @@ public class WaveController : MonoBehaviour
         }
         else if (GameManager.Instance.CurrentState == GameState.WaveActive)
         {
-            // Убиваем всех оставшихся врагов (вызываем их смерть)
+            // Убиваем всех оставшихся врагов
             foreach (var enemy in EnemyRegistry.AllEnemies)
             {
-                enemy.TakeDamage(9999f);
+                if (enemy != null)
+                    enemy.TakeDamage(9999f);
             }
         }
     }
 
-    // Метод для принудительного начала следующей волны (если волна завершена и таймер не запущен)
+    /// <summary>Принудительно начать следующую волну (если волна завершена и таймер не запущен)</summary>
     public void ForceNextWave()
     {
         if (GameManager.Instance.CurrentState == GameState.WaveComplete)

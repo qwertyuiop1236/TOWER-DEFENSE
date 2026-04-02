@@ -10,7 +10,7 @@ public class EnemyNecromancer : Enemy
     [SerializeField] protected float xpNecromancer = 400f;
 
     [Header("Общие параметры")]
-    [SerializeField] protected GameObject Skeleton;
+    [SerializeField] protected EnemyDataSO SkeletonData;
     [SerializeField] protected float TimeSpavn = 0;
     [SerializeField] protected float TimeSpavnMax = 1;
 
@@ -18,7 +18,7 @@ public class EnemyNecromancer : Enemy
     {
         base.Start();
         _moveSpeed = speedMuveNecromancer;
-        _damage = damageNecromancer;
+        _damageToBase = damageNecromancer;
         _health = xpNecromancer;
         TimeSpavn = TimeSpavnMax;
     }
@@ -37,12 +37,11 @@ public class EnemyNecromancer : Enemy
     protected void Spawner()
     {
         // Используем фабрику для создания скелета (вместо Instantiate)
-        EnemyFactory.Create(Skeleton, transform.position, Quaternion.identity);
+        EnemyFactory.Create(SkeletonData, transform.position, Quaternion.identity);
     }
 
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
-        Debug.Log("нанесенный урон " + damage);
     }
 }

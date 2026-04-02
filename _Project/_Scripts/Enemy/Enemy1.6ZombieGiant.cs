@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class EnemyZombieGiant : EnemyZombie
 {
-    //[Header("настройка уникальных параметров ZombieGiant")]
-
     
     protected override void Start()
     {
@@ -20,6 +18,5 @@ public class EnemyZombieGiant : EnemyZombie
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
-        Debug.Log("нанесенный урон " + damage);
     }
 }

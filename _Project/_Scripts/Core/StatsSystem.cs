@@ -5,12 +5,11 @@ public class StatsSystem : MonoBehaviour
 {
     public static StatsSystem Instance { get; private set; }
     
-    // СОБЫТИЯ
     public event Action<int> OnMoneyChanged;
     public event Action<int> OnScoreChanged;
     public event Action<int> OnHealthChanged;
+    public event Action<int> OnHealthDepleted;  // добавлено
     
-    // ДАННЫЕ
     [SerializeField] private int _startMoney = 100;
     [SerializeField] private int _startHealth = 20;
     [SerializeField] private int _startScore = 0;
@@ -19,7 +18,6 @@ public class StatsSystem : MonoBehaviour
     private int _score;
     private int _health;
     
-    // СВОЙСТВА (только чтение)
     public int Money => _money;
     public int Score => _score;
     public int Health => _health;
@@ -38,21 +36,25 @@ public class StatsSystem : MonoBehaviour
         }
     }
 
+    // Единый метод TakeDamage
+    public void TakeDamage(int damage)
+    {
+        if (damage <= 0) return;
+        _health = Mathf.Max(0, _health - damage);
+        OnHealthChanged?.Invoke(_health);
+        if (_health == 0) OnHealthDepleted?.Invoke(_health);
+    }
 
     void InitializeStats()
     {
         _money = _startMoney;
         _health = _startHealth;
         _score = _startScore;
-        
         OnMoneyChanged?.Invoke(_money);
         OnHealthChanged?.Invoke(_health);
         OnScoreChanged?.Invoke(_score);
     }
     
-    // МЕТОДЫ ДЛЯ ИЗМЕНЕНИЯ СТАТИСТИКИ
-
-    // Увеличение количества монет
     public void AddMoney(int amount)
     {
         if (amount <= 0) return;
@@ -60,7 +62,6 @@ public class StatsSystem : MonoBehaviour
         OnMoneyChanged?.Invoke(_money);
     }
     
-    // Уменьшение количества монет
     public bool TrySpendMoney(int amount)
     {
         if (_money < amount) return false;
@@ -69,7 +70,6 @@ public class StatsSystem : MonoBehaviour
         return true;
     }
     
-    // Увеличение счета
     public void AddScore(int amount)
     {
         if (amount <= 0) return;
@@ -77,15 +77,6 @@ public class StatsSystem : MonoBehaviour
         OnScoreChanged?.Invoke(_score);
     }
     
-    // Изменение количества здоровья
-    public void TakeDamage(int damage)
-    {
-        if (damage <= 0) return;
-        _health = Mathf.Max(0, _health - damage);
-        OnHealthChanged?.Invoke(_health);
-    }
-    
-    // Увеличение количества здоровья
     public void Heal(int amount)
     {
         if (amount <= 0) return;
@@ -93,16 +84,13 @@ public class StatsSystem : MonoBehaviour
         OnHealthChanged?.Invoke(_health);
     }
     
-    // СБРОС СТАТИСТИКИ (для новой игры)
     public void ResetStats()
     {
         _money = _startMoney;
         _health = _startHealth;
         _score = _startScore;
-        
         OnMoneyChanged?.Invoke(_money);
         OnHealthChanged?.Invoke(_health);
         OnScoreChanged?.Invoke(_score);
     }
-
 }

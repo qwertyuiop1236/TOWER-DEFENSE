@@ -19,7 +19,7 @@ public class EnemyZombie : Enemy
 
     public float _Armor => _armor;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
         BarRefreshTime += BarRefreshTimeMax;
         originalSpeed = _moveSpeed;

@@ -16,6 +16,5 @@ public class EnemyFastZombie : EnemyZombie
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
-        Debug.Log("нанесенный урон " + damage);
     }
 }

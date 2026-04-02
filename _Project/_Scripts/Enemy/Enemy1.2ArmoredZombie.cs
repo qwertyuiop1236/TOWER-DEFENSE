@@ -1,11 +1,7 @@
 using UnityEngine;
 
 public class EnemyArmoredZombie: EnemyZombie
-{
-    //[Header("настройка уникальных параметров ArmoredZombie")]
-
-
-    
+{  
     protected override void Start()
     {
         base.Start();
@@ -18,8 +14,6 @@ public class EnemyArmoredZombie: EnemyZombie
 
     public override void TakeDamage(float damage)
     {
-
         base.TakeDamage(damage);
-
     }
 }
