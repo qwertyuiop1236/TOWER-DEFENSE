@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class MagicTower : Tower
 {
+    [Header("Уникальные поля для мага")]
     [SerializeField] private GameObject _spellPrefab;
     [SerializeField] private Transform _castPoint;
+    [SerializeField] private float _mageBullSpeed;
     [SerializeField] private float _slowEffect = 0.3f; // Замедление на 30%
     [SerializeField] private float _effectDuration = 3f;
     [SerializeField] private bool _canChain = false;
@@ -15,7 +17,7 @@ public class MagicTower : Tower
         
         // Проигрывание звука стройки
 
-        AudioManager.Instance.PlaySound("tower_build");
+        AudioManager.Instance.PlaySound(_towerBuildSoundKey);
 
         Debug.Log("Магическая башня построена!");
     }
@@ -30,9 +32,9 @@ public class MagicTower : Tower
         spell.transform.right = direction;
         
         Rigidbody2D rb = spell.GetComponent<Rigidbody2D>();
-        if (rb != null) rb.velocity = direction * _attackSpeed;
+        if (rb != null) rb.velocity = direction * _mageBullSpeed;
         
-        AudioManager.Instance.PlaySound("magic_shoot", randomPitch: true);
+        AudioManager.Instance.PlaySound(_arrowShootSoundKey, randomPitch: true);
         spell.GetComponent<ProjectileBase>().Initialize(_damage, 10, gameObject);
         ResetAttackTimer();
         Debug.Log($"Магия! Урон: {_damage}, Замедление: {_slowEffect:P0}");
@@ -53,7 +55,7 @@ public class MagicTower : Tower
             if (_level >= 3) _maxChainTargets = 5;
             
             // Проигрывание звука улучшения
-            AudioManager.Instance.PlaySound("tower_upgrade");
+            AudioManager.Instance.PlaySound(_towerUpgradeSoundKey);
 
             Debug.Log($"Маг улучшен! Цепная молния: {_canChain}, целей: {_maxChainTargets}");
         }

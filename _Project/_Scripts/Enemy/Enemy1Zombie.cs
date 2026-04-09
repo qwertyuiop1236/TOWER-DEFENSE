@@ -23,7 +23,7 @@ public class EnemyZombie : Enemy
     {
         BarRefreshTime += BarRefreshTimeMax;
         originalSpeed = _moveSpeed;
-        AudioManager.Instance.PlaySound("zombie_damage", randomPitch: true, position: transform.position);
+        AudioManager.Instance.PlaySound(_spawnSoundKey, randomPitch: true, position: transform.position);
     }
 
     protected override void Start()
@@ -63,7 +63,7 @@ public class EnemyZombie : Enemy
             if (_armor - damage > 0)
             {
                 _armor -= damage;
-                AudioManager.Instance.PlaySound("zombie_armor_hit", volume: 0.3f, randomPitch: true, position: transform.position);
+                AudioManager.Instance.PlaySound(_armorHitSoundKey, volume: 0.3f, randomPitch: true, position: transform.position);
                 Debug.Log("Урона по броне " + damage);
             }
             else
@@ -78,7 +78,7 @@ public class EnemyZombie : Enemy
     protected override void Death()
     {
         base.Death();
-        AudioManager.Instance.PlaySound("zombie_death", randomPitch: true, position: transform.position);
+        AudioManager.Instance.PlaySound(_deathSoundKey, randomPitch: true, position: transform.position);
     }
 
     public void ApplySpeedBoost(float multiplier)

@@ -68,7 +68,7 @@ public class ObjectPool : MonoBehaviour
         }
         else
         {
-            // Если маркера нет – уничтожаем (защита от ошибок)
+            // Если маркера нет  уничтожаем (защита от ошибок)
             Destroy(obj);
         }
     }

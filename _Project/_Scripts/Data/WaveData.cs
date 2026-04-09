@@ -10,7 +10,8 @@ public class WaveData : ScriptableObject
 [System.Serializable]
 public class EnemyWave
 {
-    public EnemyDataSO enemyData;   // вместо GameObject enemyPrefab
+    public EnemyDataSO enemyData;
     public int count = 1;
     public float delayBetweenSpawn = 0.5f;
+    public float startDelay = 0f;      // задержка перед началом спавна этой группы (в секундах от начала волны)
 }

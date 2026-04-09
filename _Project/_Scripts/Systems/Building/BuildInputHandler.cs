@@ -48,12 +48,14 @@ public class BuildInputHandler : MonoBehaviour
         TowerData selected = BuildManager.SelectedTower;
         if (selected != null && selected.ghostPrefab != null)
         {
-            if (_currentGhost == null)
+            // Проверяем, существует ли объект и не уничтожен ли
+            if (_currentGhost == null || _currentGhost.gameObject == null)
             {
+                if (_currentGhost != null) 
+                    Destroy(_currentGhost);
                 _currentGhost = Instantiate(selected.ghostPrefab);
                 _currentGhost.SetActive(false);
             }
-
             if (_hoveredPad != null && !_hoveredPad.IsOccupied)
             {
                 _currentGhost.transform.position = _hoveredPad.transform.position;
@@ -90,17 +92,29 @@ public class BuildInputHandler : MonoBehaviour
 
     private void SetGhostColor(Color color)
     {
-        if (_currentGhost == null) return;
+        if (_currentGhost == null || _currentGhost.gameObject == null) return;
         SpriteRenderer sr = _currentGhost.GetComponent<SpriteRenderer>();
         if (sr != null) sr.color = new Color(color.r, color.g, color.b, 0.5f);
     }
 
     private void OnBuildModeChanged(bool active, TowerData data)
     {
-        if (!active && _currentGhost != null)
+        if (!active)
         {
-            Destroy(_currentGhost);
-            _currentGhost = null;
+            if (_currentGhost != null)
+            {
+                Destroy(_currentGhost);
+                _currentGhost = null;
+            }
+        }
+        else // active == true
+        {
+            // При входе в режим удаляем старый призрак, если он ещё висит (на всякий случай)
+            if (_currentGhost != null)
+            {
+                Destroy(_currentGhost);
+                _currentGhost = null;
+            }
         }
     }
 

@@ -209,13 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52cdc0f91b0277bceae18febd12b3ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speedMuve: 1
-  _cost: 150
-  _maxXp: 0
-  _xp: 450
-  _maxArmor: 0
-  _armor: 50
-  _point: 450
+  _data: {fileID: 11400000, guid: dee4bb249424d5f7489f9e49c8f2fc98, type: 2}
   hasShield: 0
   shieldDamageMultiplier: 1
   BarXP: {fileID: 5135175512498987256}

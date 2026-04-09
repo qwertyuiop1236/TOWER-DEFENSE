@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BuildTowerCommand : ICommand
+public class BuildTowerCommand : MonoBehaviour, ICommand
 {
     private readonly TowerData _towerData;
     private readonly BuildPad _buildPad;
@@ -23,14 +23,14 @@ public class BuildTowerCommand : ICommand
             return;
         }
 
-        // Используем пул для создания башни
-        GameObject towerObj = ObjectPool.Instance.Get(_towerData.prefab, _buildPad.transform.position, Quaternion.identity);
+        // Используем Instantiate вместо пула
+        GameObject towerObj = Instantiate(_towerData.prefab, _buildPad.transform.position, Quaternion.identity);
         Tower tower = towerObj.GetComponent<Tower>();
         if (tower == null)
         {
             Debug.LogError($"Префаб {_towerData.prefab.name} не содержит компонент Tower!");
-            ObjectPool.Instance.Return(towerObj);
-            StatsSystem.Instance.AddMoney(_cost); // возвращаем деньги
+            Destroy(towerObj);
+            StatsSystem.Instance.AddMoney(_cost);
             return;
         }
 
@@ -46,7 +46,7 @@ public class BuildTowerCommand : ICommand
         if (_builtTower != null)
         {
             _buildPad.ClearTower();
-            ObjectPool.Instance.Return(_builtTower);
+            Destroy(_builtTower);
             StatsSystem.Instance.AddMoney(_cost);
             Debug.Log("Отмена строительства");
         }

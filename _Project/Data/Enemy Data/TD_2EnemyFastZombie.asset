@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79602b2787896e753970784e88fda1bf, type: 3}
+  m_Name: TD_2EnemyFastZombie
+  m_EditorClassIdentifier: 
+  enemyName: Fast Zomdie
+  prefab: {fileID: 2787540072896231406, guid: 44a058c947f6887e19a6ba2168374b24, type: 3}
+  moveSpeed: 1.5
+  maxHealth: 50
+  armor: 0
+  cost: 10
+  scoreValue: 10
+  damageToBase: 5
+  isFlying: 0
+  icon: {fileID: 0}
+  deathEffect: {fileID: 0}
+  spawnSoundKey: enemy_spawn
+  damageSoundKey: enemy_damage
+  deathSoundKey: enemy_death
+  armorHitSoundKey: enemy_armor_hit

@@ -32,11 +32,17 @@ public abstract class Tower : MonoBehaviour
     public BuildPad MyBuildPad => _myBuildPad;
     public TowerData TowerData => _towerData;
 
+    // Переменные с ключами звука для Башен
+    protected string _towerBuildSoundKey;
+    protected string _arrowShootSoundKey;
+    protected string _towerUpgradeSoundKey;
+
     protected ITargetStrategy _targetStrategy;
 
     protected List<Enemy> enemiesInRange = new List<Enemy>();
     private float _rangeCacheTimer;
     private const float RANGE_CACHE_INTERVAL = 0.2f; // обновлять раз в 0.2 секунды    
+    protected GameObject _projectilePrefab;
     
     // 4. Виртуальный Start
     protected virtual void Start()
@@ -74,6 +80,15 @@ public abstract class Tower : MonoBehaviour
             _damage = 10f * _level; // Базовый урон по умолчанию
         }
         
+        if (_towerData != null && _towerData.projectilePrefab != null)
+        {
+            _projectilePrefab = _towerData.projectilePrefab;
+        }
+        else
+        {
+            Debug.LogWarning($"У башни {name} нет projectilePrefab в TowerData!", this);
+        }
+        
         Debug.Log($"Башня уровня {_level} построена! Урон: {_damage}, Дальность: {_range}");
     }
     
@@ -97,7 +112,7 @@ public abstract class Tower : MonoBehaviour
             _rangeCacheTimer -= Time.deltaTime;
         }
 
-        // Если нет цели или цель невалидна – ищем новую
+        // Если нет цели или цель невалидна - ищем новую
         if (_currentTarget == null || !IsTargetValid(_currentTarget))
         {
             FindTarget();
@@ -164,9 +179,11 @@ public abstract class Tower : MonoBehaviour
     }
     
     // 8. Общие методы для всех башен
-    protected bool IsTargetValid(Enemy enemy)
+   protected bool IsTargetValid(Enemy enemy)
     {
         if (enemy == null) return false;
+        if (!enemy.gameObject.activeInHierarchy) return false;
+        if (!enemy.enabled) return false;
         return IsInRange(enemy.transform.position);
     }
     
@@ -205,7 +222,13 @@ public abstract class Tower : MonoBehaviour
             _range = data.baseRange;
             _attackSpeed = data.baseAttackSpeed;
             _cost = data.baseCost;
-            
+
+
+            _towerBuildSoundKey = data.towerBuildSoundKey;
+            _arrowShootSoundKey = data.arrowShootSounKey;
+            _towerUpgradeSoundKey = data.towerUpgradeSoundKey;
+
+
             // ПРОПУСТИ эту проверку - поля нет в TowerData
             // Визуальная модель уже есть в префабе башни
         }
@@ -456,8 +479,11 @@ public abstract class Tower : MonoBehaviour
         for (int i = 0; i < allEnemies.Count; i++)
         {
             var enemy = allEnemies[i];
-            if (enemy != null && IsInRange(enemy.transform.position))
+            // Проверяем: враг существует, активен, включён и находится в радиусе
+            if (enemy != null && enemy.gameObject.activeInHierarchy && enemy.enabled && IsInRange(enemy.transform.position))
+            {
                 enemiesInRange.Add(enemy);
+            }
         }
     }
 }

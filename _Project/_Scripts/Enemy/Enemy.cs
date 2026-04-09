@@ -8,23 +8,16 @@ public abstract class Enemy : MonoBehaviour, IPoolable
     // Характеристики, используемые в коде (кэшированные значения из _data)
     protected float _moveSpeed;
     protected float _health;
-    protected float _maxHealth;
     protected float _armor;
-    protected float _maxArmor;
     protected int _cost;
     protected int _scoreValue;
     protected int _damageToBase;
 
+    // Максимальное значение для Здаровья и Защиты
+    protected float _maxHealth;
+    protected float _maxArmor;
+
     protected int _damage;  // урон, наносимый врагом (может быть переопределён в наследниках)
-
-    private Transform[] waypoints;
-    private int currentIndex = 0;
-
-    public static event System.Action<Enemy> OnDeath;
-
-    public int Cost => _cost;
-    public float Health => _health;
-    public float Armor => _armor;
 
     // Значения для сброса состояния
     private float _initialSpeed;
@@ -33,52 +26,36 @@ public abstract class Enemy : MonoBehaviour, IPoolable
     private int _initialScore;
     private int _initialCost;
 
+    // Публичные переменные для обращения 
+    public int Cost => _cost;
+    public float Health => _health;
+    public float Armor => _armor;
+
+    // Key для звука
+    protected string _damageSoundKey;
+    protected string _armorHitSoundKey;
+    protected string _deathSoundKey;
+    protected string _spawnSoundKey;
+
+    private Transform[] waypoints;
+    private int currentIndex = 0;
+
+    public static event System.Action<Enemy> OnDeath;
+
     protected virtual void Awake()
     {
         InitializeFromData();
     }
 
-    /// <summary>
-    /// Инициализирует врага данными из ScriptableObject. Вызывается при создании (Awake) и при доставании из пула (OnGetFromPool).
-    /// </summary>
-    public virtual void InitializeFromData()
-    {
-        if (_data == null)
-        {
-            Debug.LogError($"Enemy {name} не имеет назначенного EnemyDataSO!", this);
-            return;
-        }
-
-        _moveSpeed = _data.moveSpeed;
-        _health = _data.maxHealth;
-        _maxHealth = _data.maxHealth;
-        _armor = _data.armor;
-        _cost = _data.cost;
-        _scoreValue = _data.scoreValue;
-        _damageToBase = _data.damageToBase;
-
-        // Сохраняем начальные значения для сброса
-        _initialSpeed = _moveSpeed;
-        _initialHealth = _health;
-        _initialArmor = _armor;
-        _initialScore = _scoreValue;
-        _initialCost = _cost;
-
-        // Дополнительная инициализация (например, для летающих врагов)
-        if (_data.isFlying)
-        {
-            // можно настроить физику, игнорирование наземных препятствий и т.д.
-        }
-    }
-
     protected virtual void Start()
     {
-        if (waypoints != null && waypoints.Length > 1)
+        waypoints = PathManager.Instance?.waypoints;
+        if (waypoints == null || waypoints.Length == 0)
         {
-            waypoints = PathManager.Instance.waypoints;
-            if (waypoints == null || waypoints.Length == 0)
-                Debug.LogError("Нет точек пути! Добавьте Waypoints в PathManager.");
+            Debug.LogError("Нет точек пути! Добавьте Waypoints в PathManager.");
+            return;
         }
+        // Никакой дополнительной проверки не нужно
     }
 
     protected virtual void Update()
@@ -97,6 +74,49 @@ public abstract class Enemy : MonoBehaviour, IPoolable
             currentIndex++;
             if (currentIndex >= waypoints.Length)
                 Attack(_damageToBase);
+        }
+    }
+
+
+    /// <summary>
+    /// Инициализирует врага данными из ScriptableObject. Вызывается при создании (Awake) и при доставании из пула (OnGetFromPool).
+    /// </summary>
+    public virtual void InitializeFromData()
+    {
+        if (_data == null)
+        {
+            Debug.LogError($"Enemy {name} не имеет назначенного EnemyDataSO!", this);
+            return;
+        }
+
+        // Базовые характеристики врага 
+        _moveSpeed = _data.moveSpeed;
+        _health = _data.maxHealth;
+        _maxHealth = _data.maxHealth;
+        _armor = _data.armor;
+        _cost = _data.cost;
+        _scoreValue = _data.scoreValue;
+        _damageToBase = _data.damageToBase;
+
+        // Переменные с ключами звука для Врагов
+        _damageSoundKey = _data.damageSoundKey;
+        _armorHitSoundKey = _data.armorHitSoundKey;
+        _deathSoundKey = _data.deathSoundKey;
+        _spawnSoundKey = _data.spawnSoundKey;
+
+        // Сохраняем начальные значения для сброса
+        _initialSpeed = _moveSpeed;
+        _initialHealth = _health;
+        _initialArmor = _armor;
+        _initialScore = _scoreValue;
+        _initialCost = _cost;
+
+
+
+        // Дополнительная инициализация (например, для летающих врагов)
+        if (_data.isFlying)
+        {
+            // можно настроить физику, игнорирование наземных препятствий и т.д.
         }
     }
 
@@ -126,9 +146,11 @@ public abstract class Enemy : MonoBehaviour, IPoolable
 
     protected virtual void Attack(int damage)
     {
+        OnDeath?.Invoke(this);
         Debug.Log($"{name} достиг конца пути и нанёс {damage} урона базе!");
         StatsSystem.Instance.TakeDamage(damage);
         ObjectPool.Instance.Return(gameObject);
+        AudioManager.Instance.PlaySound(_deathSoundKey, randomPitch: true, position: transform.position);
     }
 
     protected virtual void PlayDamageSound()

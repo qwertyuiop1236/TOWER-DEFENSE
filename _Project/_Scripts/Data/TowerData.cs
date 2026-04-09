@@ -20,6 +20,9 @@ public class TowerData : ScriptableObject
     public int baseCost;
     public GameObject prefab;
     public GameObject ghostPrefab;
+
+    [Header("Снаряд")]
+    public GameObject projectilePrefab;
     
     [Header("Боевые характеристики")]
     public float baseDamage;
@@ -43,6 +46,11 @@ public class TowerData : ScriptableObject
         public string branchName;
         public TowerUpgrade[] upgrades; // Уровни 1, 2, 3
     }
+    
+    [Header("Звуки (ключи для AudioManager)")]
+    public string towerBuildSoundKey = "tower_build";
+    public string arrowShootSounKey = "arrow_shoot";
+    public string towerUpgradeSoundKey = "tower_upgrade";
 }
 
 [System.Serializable]

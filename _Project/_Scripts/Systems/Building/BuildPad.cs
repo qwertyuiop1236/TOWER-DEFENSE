@@ -21,7 +21,7 @@ public class BuildPad : MonoBehaviour
             Debug.LogError("BuildPad нужен Collider2D для 2D игры!");
         }
 
-        if (_highlight != null) _highlight.SetActive(false);
+        // if (_highlight != null) _highlight.SetActive(false);
         if (_upgradeUI != null) _upgradeUI.SetActive(false);
     }
 
@@ -45,10 +45,25 @@ public class BuildPad : MonoBehaviour
         }
     }
 
+    public void SetActive(bool active)
+    {
+        // Включаем/выключаем коллайдер
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = active;
+        
+        // Скрываем подсветку (если она есть)
+        if (_highlight != null) _highlight.SetActive(active);
+        
+        // По желанию: скрываем визуал самой площадки
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (sr != null) sr.enabled = active;
+    }
+
     public void SetTower(Tower tower)
     {
         CurrentTower = tower;
         IsOccupied = true;
+        SetActive(false); // выключаем площадку
         OnTowerBuilt?.Invoke(tower);
     }
 
@@ -56,7 +71,6 @@ public class BuildPad : MonoBehaviour
     {
         CurrentTower = null;
         IsOccupied = false;
+        SetActive(true); // включаем обратно
     }
-
-    
 }

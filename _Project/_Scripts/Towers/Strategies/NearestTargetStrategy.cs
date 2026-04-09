@@ -9,7 +9,7 @@ public class NearestTargetStrategy : ITargetStrategy
         float minDist = float.MaxValue;
         foreach (Enemy enemy in enemiesInRange)
         {
-            if (enemy == null) continue;
+            if (enemy == null || !enemy.gameObject.activeInHierarchy || !enemy.enabled) continue;
             float dist = Vector3.Distance(towerPosition, enemy.transform.position);
             if (dist < minDist)
             {

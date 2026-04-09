@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79602b2787896e753970784e88fda1bf, type: 3}
+  m_Name: TD_7EnemyZombieGiant
+  m_EditorClassIdentifier: 
+  enemyName: Giant
+  prefab: {fileID: 2279890116105537712, guid: 6588d671f0acbbfd4836daa77363f587, type: 3}
+  moveSpeed: 0.2
+  maxHealth: 1000
+  armor: 200
+  cost: 250
+  scoreValue: 100
+  damageToBase: 20
+  isFlying: 0
+  icon: {fileID: 0}
+  deathEffect: {fileID: 0}
+  spawnSoundKey: enemy_spawn
+  damageSoundKey: enemy_damage
+  deathSoundKey: enemy_death
+  armorHitSoundKey: enemy_armor_hit

@@ -1,0 +1,175 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8681492982611135305
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3992339475414673979}
+  - component: {fileID: 1177403351813792860}
+  - component: {fileID: 3766754661883054697}
+  - component: {fileID: 5636144285794779907}
+  - component: {fileID: 5511829989145799304}
+  - component: {fileID: 7457668555851435197}
+  - component: {fileID: 2873090409099452376}
+  - component: {fileID: 2966236399724631094}
+  - component: {fileID: 8092166258073316632}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3992339475414673979
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8681492982611135305}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.2108927, y: 1.9103308, z: 979.3968}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1177403351813792860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8681492982611135305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9007ba842386bedea9b0e2f93721ee9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startMoney: 100
+  _startHealth: 20
+  _startScore: 1
+--- !u!114 &3766754661883054697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8681492982611135305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d64c32d567334483bb3b0bbc153c0db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5636144285794779907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8681492982611135305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c83dc0600b91c8479da553cff994792, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5511829989145799304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8681492982611135305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d0a1e6cdc1965d5ba175cb1f1407b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moneyText: {fileID: 0}
+  _scoreText: {fileID: 0}
+  _healthText: {fileID: 0}
+  _timeBeforeWaveText: {fileID: 0}
+  _moneyFormat: $ {0}
+  _scoreFormat: 'Score: {0}'
+  _healthFormat: 'HP: {0}'
+  victoryPanel: {fileID: 0}
+  defeatPanel: {fileID: 0}
+  nextLevelButton: {fileID: 0}
+--- !u!114 &7457668555851435197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8681492982611135305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e608b5dc9a024f032a06f0f436813eb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buildPadLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _undoKey: 102
+--- !u!114 &2873090409099452376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8681492982611135305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8042a36d25614ede9198e778ab226eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startTime: 5
+--- !u!114 &2966236399724631094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8681492982611135305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231b4ce65279900b684c31e1c0a2c79d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _towerButtons:
+  - button: {fileID: 0}
+    towerData: {fileID: 11400000, guid: e6c60f388f97e6630b21d996c60adcc8, type: 2}
+    icon: {fileID: 0}
+    costText: {fileID: 0}
+  - button: {fileID: 0}
+    towerData: {fileID: 11400000, guid: 65ad8ac2ea03a22a9929d761ab2cda4b, type: 2}
+    icon: {fileID: 0}
+    costText: {fileID: 0}
+  - button: {fileID: 0}
+    towerData: {fileID: 11400000, guid: 67db5a550382494928b58d775e550f18, type: 2}
+    icon: {fileID: 0}
+    costText: {fileID: 0}
+--- !u!114 &8092166258073316632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8681492982611135305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03d5a7295e0463e619a858ee741f196d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _upgradePanel: {fileID: 0}
+  _upgradePathAButton: {fileID: 0}
+  _upgradePathBButton: {fileID: 0}
+  _sellButton: {fileID: 0}
+  _upgradePathAText: {fileID: 0}
+  _upgradePathBText: {fileID: 0}
+  _sellText: {fileID: 0}
