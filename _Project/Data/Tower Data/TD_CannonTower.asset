@@ -17,6 +17,7 @@ MonoBehaviour:
   baseCost: 0
   prefab: {fileID: 0}
   ghostPrefab: {fileID: 0}
+  projectilePrefab: {fileID: 0}
   baseDamage: 0
   baseRange: 0
   baseAttackSpeed: 0
@@ -29,3 +30,6 @@ MonoBehaviour:
     upgrades: []
   icon: {fileID: 0}
   targetStrategy: 0
+  towerBuildSoundKey: Construction_Tower
+  arrowShootSounKey: Shoot_Cannon
+  towerUpgradeSoundKey: Upgreat_Tower

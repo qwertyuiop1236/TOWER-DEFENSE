@@ -85,9 +85,14 @@ public class AudioManager : MonoBehaviour
     }
 
     // Основной метод воспроизведения
-    public void PlaySound(string key, float volume = 1f, bool randomPitch = false, 
-                          Vector3? position = null, AudioGroup group = AudioGroup.SFX)
+    public void PlaySound(string key, float volume = 1f, bool randomPitch = false, Vector3? position = null, AudioGroup group = AudioGroup.SFX)
     {
+        if (string.IsNullOrEmpty(key))
+        {
+        Debug.LogWarning("PlaySound вызван с пустым или null ключом!");
+            return;
+        }
+        
         if (!soundDict.TryGetValue(key, out SoundEntry entry))
         {
             Debug.LogWarning($"Sound '{key}' not found!");

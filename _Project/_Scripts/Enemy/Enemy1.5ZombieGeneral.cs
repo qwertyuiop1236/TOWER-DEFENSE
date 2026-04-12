@@ -100,7 +100,7 @@ public class EnemyZombieGeneral : EnemyZombie
         }
 
         // Проигрывание звука наложения щита
-        AudioManager.Instance.PlaySound("aura_activate", volume: 0.5f, randomPitch: true, position: transform.position);
+        AudioManager.Instance.PlaySound("Aura_Activate", volume: 0.5f, randomPitch: true, position: transform.position);
         
         
         if (showDebug && currentZombies.Count > 0)

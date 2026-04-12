@@ -32,3 +32,6 @@ MonoBehaviour:
     upgrades: []
   icon: {fileID: 0}
   targetStrategy: 0
+  towerBuildSoundKey: Construction_Tower
+  arrowShootSounKey: Shoot_Arrow
+  towerUpgradeSoundKey: Upgreat_Tower

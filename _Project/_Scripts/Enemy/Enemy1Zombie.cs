@@ -23,7 +23,8 @@ public class EnemyZombie : Enemy
     {
         BarRefreshTime += BarRefreshTimeMax;
         originalSpeed = _moveSpeed;
-        AudioManager.Instance.PlaySound(_spawnSoundKey, randomPitch: true, position: transform.position);
+        if (!string.IsNullOrEmpty(_spawnSoundKey))
+            AudioManager.Instance.PlaySound(_spawnSoundKey, randomPitch: true, position: transform.position);
     }
 
     protected override void Start()

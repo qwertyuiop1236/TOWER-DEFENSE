@@ -29,7 +29,7 @@ public class EnemyZombieCavaleria : EnemyZombie
         {
             if (xpHorse >= 0)
             {
-                AudioManager.Instance.PlaySound("aura_activate", volume: 0.5f, randomPitch: true, position: transform.position);
+                AudioManager.Instance.PlaySound("Aura_Activate", volume: 0.5f, randomPitch: true, position: transform.position);
             }
             xpHorse = -1;
             _moveSpeed = speedMuveFastZombie;

@@ -25,10 +25,6 @@ public class BuildPad : MonoBehaviour
         if (_upgradeUI != null) _upgradeUI.SetActive(false);
     }
 
-    public void SetHighlight(bool active)
-    {
-        if (_highlight != null) _highlight.SetActive(active);
-    }
 
     public void OnPadClicked()
     {
@@ -52,7 +48,7 @@ public class BuildPad : MonoBehaviour
         if (col != null) col.enabled = active;
         
         // Скрываем подсветку (если она есть)
-        if (_highlight != null) _highlight.SetActive(active);
+        // if (_highlight != null) _highlight.SetActive(active);
         
         // По желанию: скрываем визуал самой площадки
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
@@ -72,5 +68,10 @@ public class BuildPad : MonoBehaviour
         CurrentTower = null;
         IsOccupied = false;
         SetActive(true); // включаем обратно
+    }
+
+    public void SetHighlight(bool active)
+    {
+        //if (_highlight != null) _highlight.SetActive(active);
     }
 }

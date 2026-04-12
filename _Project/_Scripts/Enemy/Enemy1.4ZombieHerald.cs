@@ -105,7 +105,7 @@ public class EnemyZombieHerald : EnemyZombie
         }
 
         // Проигрывание звука наложения ускорение
-        AudioManager.Instance.PlaySound("aura_activate");
+        AudioManager.Instance.PlaySound("Aura_Activate");
     }
 
     // Альтернативный вариант: использование триггеров 2D

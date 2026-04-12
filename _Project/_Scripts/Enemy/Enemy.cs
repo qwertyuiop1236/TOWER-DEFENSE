@@ -150,7 +150,8 @@ public abstract class Enemy : MonoBehaviour, IPoolable
         Debug.Log($"{name} достиг конца пути и нанёс {damage} урона базе!");
         StatsSystem.Instance.TakeDamage(damage);
         ObjectPool.Instance.Return(gameObject);
-        AudioManager.Instance.PlaySound(_deathSoundKey, randomPitch: true, position: transform.position);
+        if (!string.IsNullOrEmpty(_deathSoundKey))
+            AudioManager.Instance.PlaySound(_deathSoundKey, randomPitch: true, position: transform.position);
     }
 
     protected virtual void PlayDamageSound()

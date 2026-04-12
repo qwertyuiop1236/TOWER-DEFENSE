@@ -23,7 +23,7 @@ MonoBehaviour:
   isFlying: 0
   icon: {fileID: 0}
   deathEffect: {fileID: 0}
-  spawnSoundKey: enemy_spawn
-  damageSoundKey: enemy_damage
-  deathSoundKey: enemy_death
-  armorHitSoundKey: enemy_armor_hit
+  spawnSoundKey: Zombi_Spawn
+  damageSoundKey: Zombi_Attack
+  deathSoundKey: Zombi_Death
+  armorHitSoundKey: Zombi_Attack_Armor
